@@ -1,0 +1,11 @@
+# Sử dụng image cơ sở
+FROM openjdk:17-jdk-slim
+
+# Thiết lập thư mục làm việc
+WORKDIR /Timesheet
+
+# Sao chép tệp JAR vào thư mục làm việc
+COPY ./target/TimesheetBackend-0.0.1-SNAPSHOT.jar timesheet-backend.jar
+
+# Lệnh để thực hiện ứng dụng
+CMD ["java", "-jar", "timesheet-backend.jar"]

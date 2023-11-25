@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  Timesheet-Backend:
+    build:
+      context: ./TimesheetBackend
+      dockerfile: DockerFile
+    image: victosmat/timesheet-backend:latest
+    container_name: Timesheet-backend
+    command: java -jar timesheet-backend.jar
+    ports:
+      - "8081:8081"
+    working_dir: /Timesheet
+    volumes:
+      - ./target:/Timesheet/target
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/employee_management_system
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: minh1892001
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    volumes:
+      - mysql-data-Timesheet:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: minh1892001
+      MYSQL_DATABASE: employee_management_system
+    ports:
+      - "3306:3306"
+
+  redis:
+    image: redis:6.2
+    container_name: redis
+    ports:
+      - "6379:6379"
+
+volumes:
+  mysql-data-Timesheet:
