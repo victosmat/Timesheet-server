@@ -9,6 +9,7 @@ import com.timesheet.dto.checkin.CheckinPunishmentResDto;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class PayslipDto {
@@ -18,14 +19,14 @@ public class PayslipDto {
     private String email;
     private String departmentName;
     private DepartmentLevelStatus departmentLevelStatus;
-    private String payDay;
-    private Double totalSalary;
+    private LocalDate payDay;
+    private Long totalSalary;
     private Boolean paymentStatus;
 
     public PayslipDto() {
     }
 
-    public PayslipDto(Integer id, Integer employeeId, String fullName, String email, String departmentName, DepartmentLevelStatus departmentLevelStatus, String payDay, Double totalSalary, Boolean paymentStatus) {
+    public PayslipDto(Integer id, Integer employeeId, String fullName, String email, String departmentName, DepartmentLevelStatus departmentLevelStatus, LocalDate payDay, Long totalSalary, Boolean paymentStatus) {
         this.id = id;
         this.employeeId = employeeId;
         this.fullName = fullName;
@@ -85,19 +86,19 @@ public class PayslipDto {
         this.departmentLevelStatus = departmentLevelStatus;
     }
 
-    public String getPayDay() {
+    public LocalDate getPayDay() {
         return payDay;
     }
 
-    public void setPayDay(String payDay) {
+    public void setPayDay(LocalDate payDay) {
         this.payDay = payDay;
     }
 
-    public Double getTotalSalary() {
+    public Long getTotalSalary() {
         return totalSalary;
     }
 
-    public void setTotalSalary(Double totalSalary) {
+    public void setTotalSalary(Long totalSalary) {
         this.totalSalary = totalSalary;
     }
 

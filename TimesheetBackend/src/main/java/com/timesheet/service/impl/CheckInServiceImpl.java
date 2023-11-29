@@ -15,6 +15,9 @@ import com.timesheet.dto.request_body.CheckInRequestDto;
 import com.timesheet.repository.*;
 import com.timesheet.service.CheckInService;
 import com.timesheet.service.EmployeeService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -161,19 +164,26 @@ public class CheckInServiceImpl implements CheckInService {
     }
 
     @Override
-    public List<CheckinPunishmentResDto> getCheckinOfEmployeeAndPunishmentByStatus(Integer employeeId, CheckInStatus status, int month, int year, Boolean isComplain) {
-        List<CheckinPunishmentDto> checkinPunishmentDtoList = checkInRepository.getCheckinOfEmployeeAndPunishmentByStatus(employeeId, status, month, year);
+    public Page<CheckinPunishmentResDto> getCheckinOfEmployeeAndPunishmentByStatus(Integer employeeId, CheckInStatus status, int month, int year, Boolean isComplain, Pageable pageable) {
+        Page<CheckinPunishmentDto> checkinPunishmentDtoPage = checkInRepository.getCheckinOfEmployeeAndPunishmentByStatus(employeeId, status, month, year, pageable);
+
+        List<CheckinPunishmentDto> checkinPunishmentDtoList = checkinPunishmentDtoPage.getContent();
+
         if (isComplain != null) {
             if (isComplain)
                 checkinPunishmentDtoList.removeIf(checkinPunishmentDto -> checkinPunishmentDto.getComplain() == null);
             else checkinPunishmentDtoList.removeIf(checkinPunishmentDto -> checkinPunishmentDto.getComplain() != null);
         }
-        return addCheckinPunishmentResDtos(checkinPunishmentDtoList);
+
+        List<CheckinPunishmentResDto> checkinPunishmentResDtoList = addCheckinPunishmentResDtos(checkinPunishmentDtoList);
+
+        return new PageImpl<>(checkinPunishmentResDtoList, pageable, checkinPunishmentDtoPage.getTotalElements());
     }
 
+
     @Override
-    public List<ICheckInManageDto> getAllCheckinAndPunishment(String keyword, Integer month, Integer year, String department) {
-        return checkInRepository.getAllCheckinAndPunishment(keyword, month, year, department);
+    public Page<ICheckInManageDto> getAllCheckinAndPunishment(String keyword, Integer month, Integer year, String department, Pageable pageable) {
+        return checkInRepository.getAllCheckinAndPunishment(keyword, month, year, department, pageable);
     }
 
     private List<CheckinPunishmentResDto> addCheckinPunishmentResDtos(List<CheckinPunishmentDto> checkinPunishmentDtoList) {

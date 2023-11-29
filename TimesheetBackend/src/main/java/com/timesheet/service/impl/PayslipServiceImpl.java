@@ -4,6 +4,7 @@ import com.manage.employeemanagementmodel.entity.Absence;
 import com.manage.employeemanagementmodel.entity.Employee;
 import com.manage.employeemanagementmodel.entity.EmployeeBonus;
 import com.manage.employeemanagementmodel.entity.Payslip;
+import com.manage.employeemanagementmodel.entity.enums.DepartmentLevelStatus;
 import com.timesheet.dto.checkin.CheckinPunishmentResDto;
 import com.timesheet.dto.payslip.PayslipDto;
 import com.timesheet.repository.EmployeeRepository;
@@ -12,12 +13,13 @@ import com.timesheet.service.AbsenceService;
 import com.timesheet.service.CheckInService;
 import com.timesheet.service.EmployeeBonusService;
 import com.timesheet.service.PayslipService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
@@ -44,21 +46,18 @@ public class PayslipServiceImpl implements PayslipService {
     }
 
     @Override
-    public List<PayslipDto> generatePayslip() {
-        List<PayslipDto> payslipList = new ArrayList<>();
-        employeeRepository.findAll().forEach(employee -> payslipList.add(generatePayslipByEmployee(employee)));
-        return payslipList;
+    public Page<PayslipDto> viewPayslip(Pageable pageable, String keyword, Boolean paymentStatus, DepartmentLevelStatus level, String branch, Integer month, Integer year) {
+        if (Objects.nonNull(paymentStatus))
+            return paySlipRepository.viewPayslipByStatus(pageable, keyword, paymentStatus, level, branch, month, year);
+        return paySlipRepository.viewPayslip(pageable, keyword, level, branch, month, year);
     }
 
-    @Async
-    public PayslipDto generatePayslipByEmployee(Employee employee) {
-        return new PayslipDto(null, employee.getId(), employee.getFirstName() + " " + employee.getLastName(), employee.getEmail(), employee.getDepartment().getName(), employee.getEmployeeLevelStatus(), LocalDate.now().toString(), getTotalSalary(employee), false);
-    }
 
     @Async
     public void initPayslipByEmployee(Employee employee) {
 
-        double totalMoney = getTotalSalary(employee);
+
+        double totalMoney = getTotalSalary(employee, Pageable.unpaged());
 
         Payslip payslipSaved = new Payslip();
         payslipSaved.setPayDay(LocalDate.now());
@@ -71,7 +70,7 @@ public class PayslipServiceImpl implements PayslipService {
         paySlipRepository.save(payslipSaved);
     }
 
-    public Double getTotalSalary(Employee employee) {
+    public Double getTotalSalary(Employee employee, Pageable pageable) {
         Calendar calendar = Calendar.getInstance();
 
 //        int month = (calendar.get(Calendar.MONTH) == Calendar.JANUARY) ? 12 : calendar.get(Calendar.MONTH);
@@ -81,7 +80,7 @@ public class PayslipServiceImpl implements PayslipService {
         Double salaryRangeInHour = (double) (salaryRange / 20 / 8);
 
         List<CheckinPunishmentResDto> checkinPunishmentRes = checkInService.getCheckinOfEmployeeAndPunishmentByStatus(
-                        employee.getId(), null, month, year, null)
+                        employee.getId(), null, month, year, null, pageable)
                 .stream().filter(checkinPunishmentResDto -> Objects.nonNull(checkinPunishmentResDto.getPunishmentTypeDes())).toList();
 
         double totalPunishmentMoney = checkinPunishmentRes.stream().mapToDouble(CheckinPunishmentResDto::getPunishmentMoney).sum();

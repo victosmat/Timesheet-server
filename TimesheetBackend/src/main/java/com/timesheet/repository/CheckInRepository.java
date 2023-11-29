@@ -7,6 +7,8 @@ import com.timesheet.dto.CheckInDto;
 import com.timesheet.dto.checkin.CheckinPunishmentDto;
 import com.timesheet.dto.checkin.ICheckInManageDto;
 import com.timesheet.dto.request_body.CheckInRequestDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -43,7 +45,7 @@ public interface CheckInRepository extends JpaRepository<CheckIn, Integer> {
             "AND (checkIn.status = ?2 OR ?2 IS NULL) " +
             "AND (MONTH (checkIn.currentDate) = ?3 OR ?3 IS NULL) " +
             "AND (YEAR (checkIn.currentDate) = ?4 OR ?4 IS NULL) ")
-    List<CheckinPunishmentDto> getCheckinOfEmployeeAndPunishmentByStatus(Integer employeeId, CheckInStatus status, int month, int year);
+    Page<CheckinPunishmentDto> getCheckinOfEmployeeAndPunishmentByStatus(Integer employeeId, CheckInStatus status, int month, int year, Pageable pageable);
 
     @Query("SELECT count(checkIn) FROM CheckIn checkIn WHERE checkIn.currentDate = ?1")
     int checkCurrentDateIsExist(LocalDateTime localDateTime);
@@ -76,6 +78,6 @@ public interface CheckInRepository extends JpaRepository<CheckIn, Integer> {
             "  AND YEAR(c.current_date_checkin) = ?3\n" +
             "  AND d.name LIKE CONCAT('%', ?4, '%')\n" +
             "GROUP BY e.id, e.first_name, e.last_name, e.email, d.name\n" +
-            "ORDER BY e.id;\n", nativeQuery = true)
-    List<ICheckInManageDto> getAllCheckinAndPunishment(String keyword, Integer month, Integer year, String department);
+            "ORDER BY e.id\n", nativeQuery = true)
+    Page<ICheckInManageDto> getAllCheckinAndPunishment(String keyword, Integer month, Integer year, String department, Pageable pageable);
 }

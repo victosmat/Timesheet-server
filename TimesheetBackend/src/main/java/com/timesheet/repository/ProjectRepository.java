@@ -6,6 +6,8 @@ import com.timesheet.dto.project.ProjectDetailDto;
 import com.timesheet.dto.project.ProjectSaveDto;
 import com.timesheet.dto.project.ProjectSelectDto;
 import com.timesheet.dto.project.ProjectViewDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -28,7 +30,7 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
             ") " +
             "FROM Project project " +
             "WHERE project.name LIKE %?1%")
-    List<ProjectViewDto> findAllProjectForFormByName(String name);
+    Page<ProjectViewDto> findAllProjectForFormByName(String name, Pageable pageable);
 
     @Query("SELECT new com.timesheet.dto.project.ProjectViewDto(project.id, project.code, project.name, project.description, project.startDate, project.endDate, " +
             "(" +
@@ -41,7 +43,7 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
             ") " +
             "FROM Project project " +
             "WHERE project.projectStatus = ?1 AND project.name LIKE %?2%")
-    List<ProjectViewDto> findAllProjectForFormByStatusAndName(ProjectStatus status, String name);
+    Page<ProjectViewDto> findAllProjectForFormByStatusAndName(ProjectStatus status, String name, Pageable pageable);
 
 
     @Query("SELECT new com.timesheet.dto.project.ProjectDetailDto(" +

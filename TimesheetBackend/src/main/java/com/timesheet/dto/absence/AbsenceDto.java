@@ -1,6 +1,5 @@
 package com.timesheet.dto.absence;
 
-import com.manage.employeemanagementmodel.entity.PunishmentType;
 import com.manage.employeemanagementmodel.entity.enums.AbsenceStatus;
 import com.manage.employeemanagementmodel.entity.enums.TypeTimeOff;
 
@@ -10,6 +9,7 @@ public class AbsenceDto {
     private Integer id;
     private String reason;
     private Integer employeeId;
+    private String fullName;
     private LocalDate dateRequest;
     private LocalDate dateSubmit;
     private TypeTimeOff typeTimeOff;
@@ -20,10 +20,11 @@ public class AbsenceDto {
     public AbsenceDto() {
     }
 
-    public AbsenceDto(Integer id, String reason, Integer employeeId, LocalDate dateRequest, LocalDate dateSubmit, TypeTimeOff typeTimeOff, Double timeOff, AbsenceStatus status, Boolean punishmentStatus) {
+    public AbsenceDto(Integer id, String reason, Integer employeeId, String fullName, LocalDate dateRequest, LocalDate dateSubmit, TypeTimeOff typeTimeOff, Double timeOff, AbsenceStatus status, Boolean punishmentStatus) {
         this.id = id;
         this.reason = reason;
         this.employeeId = employeeId;
+        this.fullName = fullName;
         this.dateRequest = dateRequest;
         this.dateSubmit = dateSubmit;
         this.typeTimeOff = typeTimeOff;
@@ -56,29 +57,12 @@ public class AbsenceDto {
         this.employeeId = employeeId;
     }
 
-
-    public LocalDate getDateSubmit() {
-        return dateSubmit;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setDateSubmit(LocalDate dateSubmit) {
-        this.dateSubmit = dateSubmit;
-    }
-
-    public Double getTimeOff() {
-        return timeOff;
-    }
-
-    public void setTimeOff(Double timeOff) {
-        this.timeOff = timeOff;
-    }
-
-    public TypeTimeOff getTypeTimeOff() {
-        return typeTimeOff;
-    }
-
-    public void setTypeTimeOff(TypeTimeOff typeTimeOff) {
-        this.typeTimeOff = typeTimeOff;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public LocalDate getDateRequest() {
@@ -89,6 +73,29 @@ public class AbsenceDto {
         this.dateRequest = dateRequest;
     }
 
+    public LocalDate getDateSubmit() {
+        return dateSubmit;
+    }
+
+    public void setDateSubmit(LocalDate dateSubmit) {
+        this.dateSubmit = dateSubmit;
+    }
+
+    public TypeTimeOff getTypeTimeOff() {
+        return typeTimeOff;
+    }
+
+    public void setTypeTimeOff(TypeTimeOff typeTimeOff) {
+        this.typeTimeOff = typeTimeOff;
+    }
+
+    public Double getTimeOff() {
+        return timeOff;
+    }
+
+    public void setTimeOff(Double timeOff) {
+        this.timeOff = timeOff;
+    }
 
     public AbsenceStatus getStatus() {
         return status;

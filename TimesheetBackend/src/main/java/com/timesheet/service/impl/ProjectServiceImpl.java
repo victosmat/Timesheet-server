@@ -8,6 +8,8 @@ import com.timesheet.repository.EmployeeProjectRepository;
 import com.timesheet.repository.EmployeeRepository;
 import com.timesheet.repository.ProjectRepository;
 import com.timesheet.service.ProjectService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,13 +34,13 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<ProjectViewDto> getAllProjectsForForm(String name) {
-        return projectRepository.findAllProjectForFormByName(name);
+    public Page<ProjectViewDto> getAllProjectsForForm(String name, Pageable pageable) {
+        return projectRepository.findAllProjectForFormByName(name, pageable);
     }
 
     @Override
-    public List<ProjectViewDto> getAllProjectsForFormByStatus(ProjectStatus status, String name) {
-        return projectRepository.findAllProjectForFormByStatusAndName(status, name);
+    public Page<ProjectViewDto> getAllProjectsForFormByStatus(ProjectStatus status, String name, Pageable pageable) {
+        return projectRepository.findAllProjectForFormByStatusAndName(status, name, pageable);
     }
 
     @Override

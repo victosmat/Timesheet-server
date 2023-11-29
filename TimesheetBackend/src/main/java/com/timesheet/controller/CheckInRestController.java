@@ -9,6 +9,10 @@ import com.timesheet.dto.request_body.CheckInRequestDto;
 import com.timesheet.repository.EmployeeRepository;
 import com.timesheet.service.CheckInService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
@@ -38,20 +42,34 @@ public class CheckInRestController {
     }
 
     @GetMapping("get_checkin_of_employee_and_punishment")
-    public ResponseEntity<List<CheckinPunishmentResDto>> getCheckinOfEmployeeAndPunishment(@RequestParam("employeeId") Integer employeeId,
+    public ResponseEntity<Page<CheckinPunishmentResDto>> getCheckinOfEmployeeAndPunishment(@RequestParam(name = "pageNum") Integer pageNum,
+                                                                                           @RequestParam(name = "pageSize") Integer pageSize,
+                                                                                           @RequestParam(name = "sortField") String sortField,
+                                                                                           @RequestParam(name = "sortDir") String sortDir,
+                                                                                           @RequestParam(name = "employeeId") Integer employeeId,
                                                                                            @RequestParam(value = "status", required = false) CheckInStatus status,
                                                                                            @RequestParam(value = "month", required = false) Integer month,
                                                                                            @RequestParam(value = "year", required = false) Integer year,
                                                                                            @RequestParam(value = "isComplain", required = false) Boolean isComplain) {
-        return ResponseEntity.ok(checkInService.getCheckinOfEmployeeAndPunishmentByStatus(employeeId, status, month, year, isComplain));
+        Sort sort = Sort.by(sortField);
+        sort = (sortDir.equals("asc")) ? sort.ascending() : sort.descending();
+        Pageable pageable = PageRequest.of(pageNum - 1, pageSize, sort);
+        return ResponseEntity.ok(checkInService.getCheckinOfEmployeeAndPunishmentByStatus(employeeId, status, month, year, isComplain, pageable));
     }
 
     @GetMapping("get_all_checkin_of_and_punishment")
-    public ResponseEntity<List<ICheckInManageDto>> getAllCheckinAndPunishment(@RequestParam(value = "keyword", required = false) String keyword,
+    public ResponseEntity<Page<ICheckInManageDto>> getAllCheckinAndPunishment(@RequestParam(name = "pageNum") Integer pageNum,
+                                                                              @RequestParam(name = "pageSize") Integer pageSize,
+                                                                              @RequestParam(name = "sortField") String sortField,
+                                                                              @RequestParam(name = "sortDir") String sortDir,
+                                                                              @RequestParam(value = "keyword", required = false) String keyword,
                                                                               @RequestParam(value = "month", required = false) Integer month,
                                                                               @RequestParam(value = "year", required = false) Integer year,
                                                                               @RequestParam(value = "department", required = false) String department) {
-        return ResponseEntity.ok(checkInService.getAllCheckinAndPunishment(keyword, month, year, department));
+        Sort sort = Sort.by(sortField);
+        sort = (sortDir.equals("asc")) ? sort.ascending() : sort.descending();
+        Pageable pageable = PageRequest.of(pageNum - 1, pageSize, sort);
+        return ResponseEntity.ok(checkInService.getAllCheckinAndPunishment(keyword, month, year, department, pageable));
     }
 
 

@@ -14,6 +14,8 @@ import com.timesheet.repository.AbsenceRepository;
 import com.timesheet.repository.NoteRepository;
 import com.timesheet.service.AbsenceService;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -100,8 +102,8 @@ public class AbsenceServiceImpl implements AbsenceService {
     }
 
     @Override
-    public List<AbsenceDto> listAllAbsenceRequestInMonthAndYearOfEmployee(Integer month, Integer year, Integer employeeId) {
-        return absenceRepository.listAllAbsenceRequestInMonthAndYearOfEmployee(month, year, employeeId);
+    public Page<AbsenceDto> listAllAbsenceRequestInMonthAndYearOfEmployee(Integer month, Integer year, Integer employeeId, Pageable pageable) {
+        return absenceRepository.listAllAbsenceRequestInMonthAndYearOfEmployee(month, year, employeeId, pageable);
     }
 
     @Override

@@ -8,6 +8,8 @@ import com.timesheet.dto.checkin.CheckinPunishmentDto;
 import com.timesheet.dto.checkin.CheckinPunishmentResDto;
 import com.timesheet.dto.checkin.ICheckInManageDto;
 import com.timesheet.dto.request_body.CheckInRequestDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -31,7 +33,7 @@ public interface CheckInService {
 
     int checkCurrentDateIsExist(LocalDateTime localDateTime);
 
-    List<CheckinPunishmentResDto> getCheckinOfEmployeeAndPunishmentByStatus(Integer employeeId, CheckInStatus status, int month, int year, Boolean isComplain);
+    Page<CheckinPunishmentResDto> getCheckinOfEmployeeAndPunishmentByStatus(Integer employeeId, CheckInStatus status, int month, int year, Boolean isComplain, Pageable pageable);
 
-    List<ICheckInManageDto> getAllCheckinAndPunishment(String keyword, Integer month, Integer year, String department);
+    Page<ICheckInManageDto> getAllCheckinAndPunishment(String keyword, Integer month, Integer year, String department, Pageable pageable);
 }
