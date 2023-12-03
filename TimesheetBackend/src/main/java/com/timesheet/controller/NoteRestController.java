@@ -62,14 +62,15 @@ public class NoteRestController {
     public ResponseEntity<List<NoteDetailDto>> getAllNote(@RequestParam(required = false) TimeSheetStatus status,
                                                           @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
                                                           @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
-                                                          @RequestParam(required = false) String emailKeyword) {
+                                                          @RequestParam(required = false) String emailKeyword,
+                                                          @RequestParam(required = false) Integer pmId) {
         if (startDate == null && endDate == null) {
-            return ResponseEntity.ok().body(noteService.listAllNoteByStatus(status, emailKeyword));
+            return ResponseEntity.ok().body(noteService.listAllNoteByStatus(status, emailKeyword, pmId));
         }
         assert startDate != null;
         LocalDate localStartDate = startDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate localEndDate = endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        return ResponseEntity.ok().body(noteService.listAllNote(status, localStartDate, localEndDate, emailKeyword));
+        return ResponseEntity.ok().body(noteService.listAllNote(status, localStartDate, localEndDate, emailKeyword, pmId));
     }
 
 

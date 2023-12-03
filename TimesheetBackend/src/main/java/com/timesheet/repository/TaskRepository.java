@@ -6,6 +6,8 @@ import com.manage.employeemanagementmodel.entity.enums.TaskStatus;
 import com.manage.employeemanagementmodel.entity.enums.TaskType;
 import com.timesheet.dto.task.TaskSaveSto;
 import com.timesheet.dto.task.TaskSelectDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -22,5 +24,5 @@ public interface TaskRepository extends JpaRepository<Task, Integer> {
             "AND (task.taskType = ?3 OR ?3 IS NULL) " +
             "AND (task.taskStatus = ?4 OR ?4 IS NULL) " +
             "AND (task.priorityType = ?5 OR ?5 IS NULL)")
-    List<TaskSaveSto> findAllTaskDetailByProjectId(Integer projectId, String keyword, TaskType taskType, TaskStatus taskStatus, PriorityType priorityType);
+    Page<TaskSaveSto> findAllTaskDetailByProjectId(Integer projectId, String keyword, TaskType taskType, TaskStatus taskStatus, PriorityType priorityType, Pageable pageable);
 }

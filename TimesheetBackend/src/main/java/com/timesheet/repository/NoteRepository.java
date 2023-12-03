@@ -74,6 +74,7 @@ public interface NoteRepository extends JpaRepository<Note, Integer> {
             "note.workingTime, " +
             "CONCAT(note.task.project.code,': ',note.task.project.name), " +
             "CONCAT(note.task.name,': ',note.task.description), " +
+            "note.task.taskStatus, " +
             "note.workingType, " +
             "note.status, " +
             "CONCAT(note.employee.firstName,' ',note.employee.lastName), " +
@@ -99,6 +100,7 @@ public interface NoteRepository extends JpaRepository<Note, Integer> {
             "note.workingTime, " +
             "CONCAT(note.task.project.code,': ',note.task.project.name), " +
             "CONCAT(note.task.name,': ',note.task.description), " +
+            "note.task.taskStatus, " +
             "note.workingType, " +
             "note.status, " +
             "CONCAT(note.employee.firstName,' ',note.employee.lastName), " +
@@ -111,7 +113,7 @@ public interface NoteRepository extends JpaRepository<Note, Integer> {
             "LEFT JOIN NoteComment nc ON nc.note.id = note.id " +
             "WHERE (note.status = ?1 OR ?1 IS NULL) " +
             "AND note.employee.email LIKE %?2%")
-    List<NoteDto> listAllNoteByStatus(TimeSheetStatus status, String emailKeyword);
+    List<NoteDto> listAllNoteByStatus(TimeSheetStatus status, String emailKeyword, Integer pmId);
 }
 
 

@@ -9,6 +9,8 @@ import com.timesheet.dto.task.TaskSelectDto;
 import com.timesheet.repository.ProjectRepository;
 import com.timesheet.repository.TaskRepository;
 import com.timesheet.service.TaskService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,8 +48,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<TaskSaveSto>    listAllTaskDetailByProjectId(Integer projectId, String keyword, TaskType taskType, TaskStatus taskStatus, PriorityType priorityType) {
-        return taskRepository.findAllTaskDetailByProjectId(projectId, keyword, taskType, taskStatus, priorityType);
+    public Page<TaskSaveSto> listAllTaskDetailByProjectId(Integer projectId, String keyword, TaskType taskType, TaskStatus taskStatus, PriorityType priorityType, Pageable pageable) {
+        return taskRepository.findAllTaskDetailByProjectId(projectId, keyword, taskType, taskStatus, priorityType, pageable);
     }
 
     private void saveTask(TaskSaveSto taskSaveSto, Task task) {

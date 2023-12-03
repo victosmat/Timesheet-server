@@ -95,7 +95,7 @@ public class CheckInRestController {
     }
 
     //    @Scheduled(cron = "0 0 0 * * ${spring.scheduled.day}")
-    @Scheduled(cron = "0 0 9 * * *")
+    @Scheduled(cron = "0 50 9 * * *")
     public void initDateCheckin() {
         LocalDateTime localDateTime = LocalDateTime.now();
         List<Employee> employees = employeeRepository.findAll();

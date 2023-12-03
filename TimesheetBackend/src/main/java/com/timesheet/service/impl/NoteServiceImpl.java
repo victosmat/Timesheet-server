@@ -1,6 +1,8 @@
 package com.timesheet.service.impl;
 
+import com.manage.employeemanagementmodel.entity.EmployeeProject;
 import com.manage.employeemanagementmodel.entity.Note;
+import com.manage.employeemanagementmodel.entity.Project;
 import com.manage.employeemanagementmodel.entity.enums.TimeSheetStatus;
 import com.manage.employeemanagementmodel.exception.NoteNotFoundException;
 import com.timesheet.dto.NoteComment.NoteCommentViewDto;
@@ -11,10 +13,9 @@ import com.timesheet.dto.mapper.NoteFormDtoMapper;
 import com.timesheet.dto.project.ProjectOptionDto;
 import com.timesheet.dto.request_body.CheckInRequestDto;
 import com.timesheet.dto.request_body.NoteSummaryRequestDto;
+import com.timesheet.repository.EmployeeRepository;
 import com.timesheet.repository.NoteRepository;
 import com.timesheet.service.NoteService;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,10 +28,12 @@ import java.util.stream.Collectors;
 public class NoteServiceImpl implements NoteService {
     private final NoteRepository noteRepository;
     private final NoteFormDtoMapper noteFormDtoMapper;
+    private final EmployeeRepository employeeRepository;
 
-    public NoteServiceImpl(NoteRepository noteRepository, NoteFormDtoMapper noteFormDtoMapper) {
+    public NoteServiceImpl(NoteRepository noteRepository, NoteFormDtoMapper noteFormDtoMapper, EmployeeRepository employeeRepository) {
         this.noteRepository = noteRepository;
         this.noteFormDtoMapper = noteFormDtoMapper;
+        this.employeeRepository = employeeRepository;
     }
 
     @Override
@@ -111,20 +114,30 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public List<NoteDetailDto> listAllNote(TimeSheetStatus status, LocalDate startDate, LocalDate endDate, String emailKeyword) {
+    public List<NoteDetailDto> listAllNote(TimeSheetStatus status, LocalDate startDate, LocalDate endDate, String emailKeyword, Integer pmId) {
         List<NoteMapDto> noteMapDtos = noteRepository.listAllNoteByStatusAndDate(status, startDate, endDate, emailKeyword).stream().map(this::mapDto).toList();
-        return getNoteDetailDtos(noteMapDtos);
+        return getNoteDetailDtos(noteMapDtos, pmId);
     }
 
-    private List<NoteDetailDto> getNoteDetailDtos(List<NoteMapDto> noteMapDtos) {
+    private List<NoteDetailDto> getNoteDetailDtos(List<NoteMapDto> noteMapDtos, Integer pmId) {
+        List<EmployeeProject> listProjectByPmId = Objects.requireNonNull(employeeRepository.findById(pmId).orElse(null)).getEmployeeProjects();
+        List<Project> listProject = listProjectByPmId.stream().map(EmployeeProject::getProject).toList();
+
         Map<ProjectOptionDto, Map<EmployeeViewNoteDto, List<NoteMapDto>>> projectMap = new HashMap<>();
         noteMapDtos.forEach(noteMapDto -> {
             ProjectOptionDto projectDto = noteMapDto.getProjectOptionDto();
-            EmployeeViewNoteDto employeeDto = noteMapDto.getEmployeeViewNoteDto();
-            if (!projectMap.containsKey(projectDto)) projectMap.put(projectDto, new HashMap<>());
-            Map<EmployeeViewNoteDto, List<NoteMapDto>> employeeNotes = projectMap.get(projectDto);
-            if (!employeeNotes.containsKey(employeeDto)) employeeNotes.put(employeeDto, new ArrayList<>());
-            employeeNotes.get(employeeDto).add(noteMapDto);
+
+            for (Project project : listProject) {
+                if (project.getId().equals(projectDto.getId())) {
+                    EmployeeViewNoteDto employeeDto = noteMapDto.getEmployeeViewNoteDto();
+                    if (!projectMap.containsKey(projectDto)) projectMap.put(projectDto, new HashMap<>());
+                    Map<EmployeeViewNoteDto, List<NoteMapDto>> employeeNotes = projectMap.get(projectDto);
+                    if (!employeeNotes.containsKey(employeeDto)) employeeNotes.put(employeeDto, new ArrayList<>());
+                    employeeNotes.get(employeeDto).add(noteMapDto);
+                    break;
+                }
+            }
+
         });
         return projectMap.entrySet().stream().map(entry -> {
             ProjectOptionDto projectDto = entry.getKey();
@@ -147,9 +160,9 @@ public class NoteServiceImpl implements NoteService {
         }).toList();
     }
 
-    public List<NoteDetailDto> listAllNoteByStatus(TimeSheetStatus status, String emailKeyword) {
-        List<NoteMapDto> noteMapDtos = noteRepository.listAllNoteByStatus(status,emailKeyword).stream().map(this::mapDto).toList();
-        return getNoteDetailDtos(noteMapDtos);
+    public List<NoteDetailDto> listAllNoteByStatus(TimeSheetStatus status, String emailKeyword, Integer pmId) {
+        List<NoteMapDto> noteMapDtos = noteRepository.listAllNoteByStatus(status, emailKeyword, pmId).stream().map(this::mapDto).toList();
+        return getNoteDetailDtos(noteMapDtos, pmId);
     }
 
 
@@ -170,7 +183,8 @@ public class NoteServiceImpl implements NoteService {
                 noteDto.getDateSubmit(),
                 noteDto.getDateModify(),
                 noteDto.getWorkingTime(),
-                noteDto.getTaskDes(),
+                noteDto.getTaskCode(),
+                noteDto.getTaskStatus(),
                 noteDto.getWorkingType(),
                 noteDto.getStatus(),
                 noteDto.getNoteCommentId(),

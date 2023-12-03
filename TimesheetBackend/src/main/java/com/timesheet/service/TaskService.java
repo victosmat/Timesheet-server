@@ -5,6 +5,8 @@ import com.manage.employeemanagementmodel.entity.enums.TaskStatus;
 import com.manage.employeemanagementmodel.entity.enums.TaskType;
 import com.timesheet.dto.task.TaskSaveSto;
 import com.timesheet.dto.task.TaskSelectDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -13,5 +15,5 @@ public interface TaskService {
 
     TaskSaveSto saveTaskByProject(TaskSaveSto taskSaveSto);
 
-    List<TaskSaveSto> listAllTaskDetailByProjectId(Integer projectId, String keyword, TaskType taskType, TaskStatus taskStatus, PriorityType priorityType);
+    Page<TaskSaveSto> listAllTaskDetailByProjectId(Integer projectId, String keyword, TaskType taskType, TaskStatus taskStatus, PriorityType priorityType, Pageable pageable);
 }

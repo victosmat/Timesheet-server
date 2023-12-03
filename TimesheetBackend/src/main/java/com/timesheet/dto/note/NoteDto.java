@@ -1,9 +1,9 @@
 package com.timesheet.dto.note;
 
 import com.manage.employeemanagementmodel.entity.enums.DepartmentLevelStatus;
+import com.manage.employeemanagementmodel.entity.enums.TaskStatus;
 import com.manage.employeemanagementmodel.entity.enums.TimeSheetStatus;
 import com.manage.employeemanagementmodel.entity.enums.WorkingType;
-import com.timesheet.dto.employee.EmployeeDto;
 
 import java.time.LocalDate;
 
@@ -17,6 +17,7 @@ public class NoteDto {
     private Integer workingTime;
     private String projectDes;
     private String taskDes;
+    private TaskStatus taskStatus;
     private WorkingType workingType;
     private TimeSheetStatus status;
     private String employeeName;
@@ -26,7 +27,7 @@ public class NoteDto {
     private String comment;
     private Boolean isReaded;
 
-    public NoteDto(Integer noteId, Integer employeeId, Integer projectId, String note, LocalDate dateSubmit, LocalDate dateModify, Integer workingTime, String projectDes, String taskDes, WorkingType workingType, TimeSheetStatus status, String employeeName, DepartmentLevelStatus employeeLevel, String employeeDepartment, Integer noteCommentId, String comment, Boolean isReaded) {
+    public NoteDto(Integer noteId, Integer employeeId, Integer projectId, String note, LocalDate dateSubmit, LocalDate dateModify, Integer workingTime, String projectDes, String taskCode, TaskStatus taskStatus, WorkingType workingType, TimeSheetStatus status, String employeeName, DepartmentLevelStatus employeeLevel, String employeeDepartment, Integer noteCommentId, String comment, Boolean isReaded) {
         this.noteId = noteId;
         this.employeeId = employeeId;
         this.projectId = projectId;
@@ -35,7 +36,8 @@ public class NoteDto {
         this.dateModify = dateModify;
         this.workingTime = workingTime;
         this.projectDes = projectDes;
-        this.taskDes = taskDes;
+        this.taskDes = taskCode;
+        this.taskStatus = taskStatus;
         this.workingType = workingType;
         this.status = status;
         this.employeeName = employeeName;
@@ -110,12 +112,20 @@ public class NoteDto {
         this.projectDes = projectDes;
     }
 
-    public String getTaskDes() {
+    public String getTaskCode() {
         return taskDes;
     }
 
-    public void setTaskDes(String taskDes) {
-        this.taskDes = taskDes;
+    public void setTaskCode(String taskCode) {
+        this.taskDes = taskCode;
+    }
+
+    public TaskStatus getTaskStatus() {
+        return taskStatus;
+    }
+
+    public void setTaskStatus(TaskStatus taskStatus) {
+        this.taskStatus = taskStatus;
     }
 
     public WorkingType getWorkingType() {

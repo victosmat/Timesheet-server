@@ -29,7 +29,7 @@ public interface NoteService {
 
     NoteCommentViewDto getNoteCommentById(Integer noteId);
 
-    List<NoteDetailDto> listAllNote(TimeSheetStatus status, LocalDate startDate, LocalDate endDate, String emailKeyword);
+    List<NoteDetailDto> listAllNote(TimeSheetStatus status, LocalDate startDate, LocalDate endDate, String emailKeyword, Integer pmId);
 
-    List<NoteDetailDto> listAllNoteByStatus(TimeSheetStatus status, String emailKeyword);
+    List<NoteDetailDto> listAllNoteByStatus(TimeSheetStatus status, String emailKeyword, Integer pmId);
 }
