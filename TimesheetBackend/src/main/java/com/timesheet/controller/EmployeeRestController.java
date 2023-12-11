@@ -287,4 +287,15 @@ public class EmployeeRestController {
         }
     }
 
+    @PutMapping("update_isEnable")
+    public ResponseEntity<Employee> updateIsEnable(@RequestParam("id") Integer id, @RequestParam("isEnable") Boolean isEnable) {
+        try {
+            Employee employee = employeeService.getEmployeeById(id);
+            employee.setEnabled(isEnable);
+            return ResponseEntity.ok(employeeService.save(employee));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.ok(null);
+        }
+    }
 }

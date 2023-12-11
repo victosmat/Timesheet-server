@@ -1,11 +1,15 @@
 package com.timesheet.service.impl;
 
 import com.manage.employeemanagementmodel.entity.Punishment;
+import com.manage.employeemanagementmodel.entity.enums.CheckInStatus;
+import com.timesheet.dto.checkin.CheckinPunishmentResDto;
 import com.timesheet.dto.mapper.PunishmentDtoMapper;
 import com.timesheet.dto.punishment.PunishmentDto;
 import com.timesheet.repository.PunishmentRepository;
 import com.timesheet.service.PunishmentService;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

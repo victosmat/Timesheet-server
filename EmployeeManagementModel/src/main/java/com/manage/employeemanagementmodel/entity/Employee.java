@@ -39,9 +39,11 @@ public class Employee implements Serializable {
     private boolean enabled;
     @ManyToOne
     @JoinColumn(name = "buddy_id")
+    @JsonIgnore
     private Employee buddy;
     @ManyToOne
     @JoinColumn(name = "department_id", nullable = false)
+    @JsonIgnore
     private Department department;
 
     @OneToMany(mappedBy = "employee", cascade = CascadeType.REMOVE)
@@ -54,9 +56,11 @@ public class Employee implements Serializable {
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id", nullable = false)
+    @JsonIgnore
     private Account account;
     @ManyToOne
     @JoinColumn(name = "job_department_id", nullable = false)
+    @JsonIgnore
     private JobDepartment jobDepartment;
     @OneToMany(mappedBy = "employee", cascade = CascadeType.REMOVE)
     @JsonIgnore
@@ -81,6 +85,7 @@ public class Employee implements Serializable {
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "bank_id")
+    @JsonIgnore
     private Bank bank;
 
     public Employee(Integer id, String firstName, String lastName, Gender gender, LocalDate birthDate, LocalDate hiringDate, String email, String photo, boolean enabled, Employee buddy, Department department, List<Note> notes, List<NoteComment> noteComments, Account account, JobDepartment jobDepartment, List<EmployeeBonus> employeeBonuses, List<CheckIn> checkIns, List<Absence> absences, DepartmentLevelStatus employeeLevelStatus, List<EmployeeProject> employeeProjects, Bank bank) {

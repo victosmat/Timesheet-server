@@ -80,7 +80,7 @@ public class PayslipServiceImpl implements PayslipService {
         Double salaryRangeInHour = (double) (salaryRange / 20 / 8);
 
         List<CheckinPunishmentResDto> checkinPunishmentRes = checkInService.getCheckinOfEmployeeAndPunishmentByStatus(
-                        employee.getId(), null, month, year, null, pageable)
+                        employee.getId(), null, month, year, null, pageable, false)
                 .stream().filter(checkinPunishmentResDto -> Objects.nonNull(checkinPunishmentResDto.getPunishmentTypeDes())).toList();
 
         double totalPunishmentMoney = checkinPunishmentRes.stream().mapToDouble(CheckinPunishmentResDto::getPunishmentMoney).sum();

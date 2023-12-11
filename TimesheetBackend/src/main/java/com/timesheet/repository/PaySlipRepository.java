@@ -18,6 +18,7 @@ public interface PaySlipRepository extends JpaRepository<Payslip, Integer> {
             "LEFT JOIN Employee e ON p.employee.id = e.id " +
             "LEFT JOIN Department d ON e.department.id = d.id " +
             "WHERE e.lastName LIKE %?1% OR e.firstName LIKE %?1% " +
+            "AND e.enabled = true " +
             "AND p.paymentStatus = ?2 OR ?2 IS NULL " +
             "AND e.employeeLevelStatus = ?3 OR ?3 IS NULL " +
             "AND e.department.name = ?4 OR ?4 IS NULL " +
@@ -30,6 +31,7 @@ public interface PaySlipRepository extends JpaRepository<Payslip, Integer> {
             "LEFT JOIN Employee e ON p.employee.id = e.id " +
             "LEFT JOIN Department d ON e.department.id = d.id " +
             "WHERE e.lastName LIKE %?1% OR e.firstName LIKE %?1% " +
+            "AND e.enabled = true " +
             "AND e.employeeLevelStatus = ?2 OR ?2 IS NULL " +
             "AND e.department.name = ?3 OR ?3 IS NULL " +
             "AND month(p.payDay) = ?4 OR ?4 IS NULL " +

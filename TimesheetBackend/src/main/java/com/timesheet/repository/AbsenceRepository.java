@@ -57,7 +57,7 @@ public interface AbsenceRepository extends JpaRepository<Absence, Integer> {
             "WHERE absence.id = ?1")
     void updatePendingAbsenceStatus(int absenceId, AbsenceStatus status);
 
-    @Query("SELECT e.id FROM Employee e WHERE e.id NOT IN (SELECT a.employee.id FROM Absence a WHERE a.dateRequest = ?1)")
+    @Query("SELECT e.id FROM Employee e WHERE e.id NOT IN (SELECT a.employee.id FROM Absence a WHERE a.dateRequest = ?1 AND a.status = com.manage.employeemanagementmodel.entity.enums.AbsenceStatus.APPROVED)")
     List<Integer> getAllEmployeeNotAbsenceInDay(LocalDate localDate);
 
 
@@ -90,4 +90,8 @@ public interface AbsenceRepository extends JpaRepository<Absence, Integer> {
             "   AND (absence.status = ?3 OR ?3 IS NULL) " +
             "   AND (absence.typeTimeOff = ?4 OR ?4 IS NULL)")
     List<AbsenceManageViewDto> getAbsenceByDateAllEmployee(LocalDate localDate, String email, AbsenceStatus absenceStatus, TypeTimeOff typeTimeOff);
+
+    @Modifying
+    @Query("UPDATE Absence absence SET absence.punishmentStatus = ?2 WHERE absence.id = ?1")
+    void updatePunishment(Integer absenceId, Boolean punishmentStatus);
 }

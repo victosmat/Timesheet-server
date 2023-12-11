@@ -25,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -164,18 +165,25 @@ public class CheckInServiceImpl implements CheckInService {
     }
 
     @Override
-    public Page<CheckinPunishmentResDto> getCheckinOfEmployeeAndPunishmentByStatus(Integer employeeId, CheckInStatus status, int month, int year, Boolean isComplain, Pageable pageable) {
-        Page<CheckinPunishmentDto> checkinPunishmentDtoPage = checkInRepository.getCheckinOfEmployeeAndPunishmentByStatus(employeeId, status, month, year, pageable);
+    public Page<CheckinPunishmentResDto> getCheckinOfEmployeeAndPunishmentByStatus(
+            Integer employeeId, CheckInStatus status, int month, int year,
+            Boolean isComplain, Pageable pageable, boolean isManage) {
+
+        Page<CheckinPunishmentDto> checkinPunishmentDtoPage =
+                checkInRepository.getCheckinOfEmployeeAndPunishmentByStatus(employeeId, status, month, year, pageable);
 
         List<CheckinPunishmentDto> checkinPunishmentDtoList = checkinPunishmentDtoPage.getContent();
 
-        if (isComplain != null) {
-            if (isComplain)
-                checkinPunishmentDtoList.removeIf(checkinPunishmentDto -> checkinPunishmentDto.getComplain() == null);
-            else checkinPunishmentDtoList.removeIf(checkinPunishmentDto -> checkinPunishmentDto.getComplain() != null);
-        }
+        if (isComplain != null)
+            checkinPunishmentDtoList = checkinPunishmentDtoList.stream()
+                    .filter(checkinPunishmentDto -> isComplain.equals(checkinPunishmentDto.getComplain() != null)).toList();
 
-        List<CheckinPunishmentResDto> checkinPunishmentResDtoList = addCheckinPunishmentResDtos(checkinPunishmentDtoList);
+        if (isManage)
+            checkinPunishmentDtoList = checkinPunishmentDtoList.stream()
+                    .filter(checkinPunishmentDto -> checkinPunishmentDto.getPunishmentTypeDes() != null).toList();
+
+        List<CheckinPunishmentResDto> checkinPunishmentResDtoList =
+                addCheckinPunishmentResDtos(checkinPunishmentDtoList);
 
         return new PageImpl<>(checkinPunishmentResDtoList, pageable, checkinPunishmentDtoPage.getTotalElements());
     }

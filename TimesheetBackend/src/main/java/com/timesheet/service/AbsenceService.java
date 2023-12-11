@@ -41,4 +41,6 @@ public interface AbsenceService {
     List<LocalDate> ListAllDayAbsenceInParticularMonthAndYear(Integer month, Integer year, String email, AbsenceStatus absenceStatus, TypeTimeOff typeTimeOff);
 
     List<AbsenceManageViewDto> getAbsenceByDateAllEmployee(LocalDate localDate, String email, AbsenceStatus absenceStatus, TypeTimeOff typeTimeOff);
+
+    void updatePunishment(Integer absenceId, Boolean punishmentStatus);
 }

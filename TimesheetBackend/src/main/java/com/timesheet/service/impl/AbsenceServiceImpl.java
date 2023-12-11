@@ -147,4 +147,9 @@ public class AbsenceServiceImpl implements AbsenceService {
         return absenceRepository.getAbsenceByDateAllEmployee(localDate, email, absenceStatus, typeTimeOff);
     }
 
+    @Override
+    public void updatePunishment(Integer absenceId, Boolean punishmentStatus) {
+        absenceRepository.updatePunishment(absenceId, punishmentStatus);
+    }
+
 }

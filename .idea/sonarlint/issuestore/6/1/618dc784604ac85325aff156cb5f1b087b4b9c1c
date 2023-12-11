@@ -1,0 +1,30 @@
+
+Z
+java:S2629Œ"7Use the built-in formatting to construct this argument.(½¹¸ñşÿÿÿÿ8½ë—ÊÅ1
+¦
+java:S4449³"ˆAnnotate the parameter with @javax.annotation.Nullable in constructor declaration, or make sure that null can not be passed as argument.(€¼'8ûë—ÊÅ1
+¦
+java:S4449©"ˆAnnotate the parameter with @javax.annotation.Nullable in constructor declaration, or make sure that null can not be passed as argument.(€¼'8ûë—ÊÅ1
+^	java:S107:"BConstructor has 11 parameters, which is greater than 7 authorized.(ë˜Í«8€ì—ÊÅ1
+I
+java:S1452½"&Remove usage of generic wildcard type.(Â½Øßşÿÿÿÿ8˜ì—ÊÅ1
+D
+java:S1452Ë"&Remove usage of generic wildcard type.(´Âòè8›ì—ÊÅ1
+D
+java:S1452ß"&Remove usage of generic wildcard type.(äÛ†8ì—ÊÅ1
+D
+java:S1452ì"&Remove usage of generic wildcard type.(Ù‚–³8 ì—ÊÅ1
+D
+java:S1452‚"&Remove usage of generic wildcard type.(†Ÿ8£ì—ÊÅ1
+e
+java:S1128"HRemove this unused import 'org.springframework.data.domain.PageRequest'.(ºêâÚ8¨ì—ÊÅ1
+g
+java:S1128"ERemove this unused import 'org.springframework.data.domain.Pageable'.(‡ë‚Öıÿÿÿÿ8¨ì—ÊÅ1
+c
+java:S1128"ARemove this unused import 'org.springframework.data.domain.Sort'.(ëÿ€ëøÿÿÿÿ8¨ì—ÊÅ1
+R
+java:S1068/"5Remove this unused "departmentService" private field.(ö‡æø8©ì—ÊÅ1
+U
+java:S10680"8Remove this unused "jobDepartmentService" private field.(ïşŠ­8©ì—ÊÅ1
+X
+java:S10681"6Remove this unused "employeeRepository" private field.(ÑŠåüùÿÿÿÿ8©ì—ÊÅ1

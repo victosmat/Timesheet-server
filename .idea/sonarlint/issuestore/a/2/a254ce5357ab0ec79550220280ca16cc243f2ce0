@@ -1,0 +1,14 @@
+
+I
+java:S19487".Make "noteComments" transient or serializable.(ô„âßşÿÿÿÿ
+J
+java:S1948@"/Make "jobDepartment" transient or serializable.(Œ‡¼˜ùÿÿÿÿ
+F
+java:S1948C"1Make "employeeBonuses" transient or serializable.(–äµ;
+@
+java:S1948F"*Make "checkIns" transient or serializable.(‘Ú¾
+@
+java:S1948M"*Make "absences" transient or serializable.(°÷
+H
+java:S1948Q"2Make "employeeProjects" transient or serializable.(À¥¬å
+\	java:S107["BConstructor has 21 parameters, which is greater than 7 authorized.(úÏ÷şÿÿÿÿ

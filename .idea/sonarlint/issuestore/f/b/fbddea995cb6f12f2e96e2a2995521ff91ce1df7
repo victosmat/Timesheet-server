@@ -1,0 +1,5 @@
+
+h	java:S100%"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¡¢ôèúÿÿÿÿ
+c	java:S100T"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Öã›²
+e
+java:S1128"ORemove this unused import 'com.manage.employeemanagementmodel.entity.Employee'.(ÏÕü•

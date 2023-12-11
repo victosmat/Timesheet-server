@@ -136,4 +136,9 @@ public class AbsenceRestController {
         return ResponseEntity.ok(true);
     }
 
+    @PutMapping("update_punishment")
+    public ResponseEntity<?> updatePunishment(@RequestParam("absenceId") Integer absenceId, @RequestParam("punishmentStatus") Boolean punishmentStatus) {
+        absenceService.updatePunishment(absenceId, punishmentStatus);
+        return ResponseEntity.ok(true);
+    }
 }

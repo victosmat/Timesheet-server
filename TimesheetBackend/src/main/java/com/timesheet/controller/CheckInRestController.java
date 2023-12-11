@@ -50,11 +50,12 @@ public class CheckInRestController {
                                                                                            @RequestParam(value = "status", required = false) CheckInStatus status,
                                                                                            @RequestParam(value = "month", required = false) Integer month,
                                                                                            @RequestParam(value = "year", required = false) Integer year,
-                                                                                           @RequestParam(value = "isComplain", required = false) Boolean isComplain) {
+                                                                                           @RequestParam(value = "isComplain", required = false) Boolean isComplain,
+                                                                                           @RequestParam(value = "isManage") boolean isManage) {
         Sort sort = Sort.by(sortField);
         sort = (sortDir.equals("asc")) ? sort.ascending() : sort.descending();
         Pageable pageable = PageRequest.of(pageNum - 1, pageSize, sort);
-        return ResponseEntity.ok(checkInService.getCheckinOfEmployeeAndPunishmentByStatus(employeeId, status, month, year, isComplain, pageable));
+        return ResponseEntity.ok(checkInService.getCheckinOfEmployeeAndPunishmentByStatus(employeeId, status, month, year, isComplain, pageable, isManage));
     }
 
     @GetMapping("get_all_checkin_of_and_punishment")
@@ -85,7 +86,7 @@ public class CheckInRestController {
     }
 
     //    @Scheduled(cron = "0 * ${spring.scheduled.hour.structure} * * ${spring.scheduled.day}")
-    @Scheduled(cron = "0 30 17 * * *")
+    @Scheduled(cron = "0 2 20 * * *")
     public void checkPunishmentCheckin() {
         LocalDate localDate = LocalDate.now();
         List<Integer> employeeIdsNotAbsenceInDay = checkInService.getAllEmployeeNotAbsenceInDay(localDate);
@@ -95,7 +96,7 @@ public class CheckInRestController {
     }
 
     //    @Scheduled(cron = "0 0 0 * * ${spring.scheduled.day}")
-    @Scheduled(cron = "0 50 9 * * *")
+    @Scheduled(cron = "0 0 20 * * *")
     public void initDateCheckin() {
         LocalDateTime localDateTime = LocalDateTime.now();
         List<Employee> employees = employeeRepository.findAll();
