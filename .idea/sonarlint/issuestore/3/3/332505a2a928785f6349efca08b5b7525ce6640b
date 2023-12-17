@@ -1,0 +1,28 @@
+
+m
+java:S3655r"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(¥ä¢Ÿ8Ÿ°ßÃÆ1
+n
+java:S3655™"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(ŞÑ´å8Ÿ°ßÃÆ1
+r
+java:S3655`"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(Óû•åûÿÿÿÿ8Ÿ°ßÃÆ1
+l
+java:S3655h"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(·«H8ÒÀõÙÆ1
+L	java:S106-"+Replace this use of System.out by a logger.(æ¨¤šøÿÿÿÿ8ª°ßÃÆ1
+c
+java:S1854j"ARemove this useless assignment to local variable "jobDepartment".(Ùü¡‚øÿÿÿÿ8¾°ßÃÆ1
+`
+java:S1854i">Remove this useless assignment to local variable "department".(¥şö±ÿÿÿÿÿ8¾°ßÃÆ1
+U
+java:S1854h"9Remove this useless assignment to local variable "buddy".(·«H8¾°ßÃÆ1
+U
+java:S1854f"8Remove this useless assignment to local variable "bank".(§‡‡Î8¾°ßÃÆ1
+F
+java:S1481f")Remove this unused "bank" local variable.(§‡‡Î8Á°ßÃÆ1
+F
+java:S1481h"*Remove this unused "buddy" local variable.(·«H8Å°ßÃÆ1
+Q
+java:S1481i"/Remove this unused "department" local variable.(¥şö±ÿÿÿÿÿ8Å°ßÃÆ1
+T
+java:S1481j"2Remove this unused "jobDepartment" local variable.(Ùü¡‚øÿÿÿÿ8Æ°ßÃÆ1
+W	java:S125k"<This block of commented-out lines of code should be removed.(ñÛü:8Ç°ßÃÆ1
+L	java:S106u"+Replace this use of System.out by a logger.(ÃµÉ®ıÿÿÿÿ8Ê°ßÃÆ1

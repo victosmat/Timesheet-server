@@ -11,4 +11,7 @@ public interface DepartmentRepository extends JpaRepository<Department, Integer>
 
     @Query("SELECT d FROM Department d WHERE d.name LIKE %?1%")
     List<Department> findAllbyKeyword(String keyword);
+
+    @Query("SELECT d FROM Department d WHERE d.name = ?1")
+    Department getDepartmentByName(String departmentName);
 }

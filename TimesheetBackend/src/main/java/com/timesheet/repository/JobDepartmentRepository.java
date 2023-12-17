@@ -9,4 +9,7 @@ import java.util.List;
 public interface JobDepartmentRepository extends JpaRepository<JobDepartment, Integer> {
     @Query("SELECT jd FROM JobDepartment jd WHERE jd.name LIKE %?1% OR jd.jobDepartment LIKE %?1% OR jd.description LIKE %?1%")
     List<JobDepartment> findAllbyKeyword(String keyword);
+
+    @Query("SELECT jd FROM JobDepartment jd WHERE jd.jobDepartment = ?1")
+    JobDepartment getJobDepartmentByJobDepartment(String jobDepartment);
 }

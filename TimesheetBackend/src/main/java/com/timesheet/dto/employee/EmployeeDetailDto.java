@@ -13,7 +13,6 @@ public class EmployeeDetailDto {
     private Gender gender;
     private String birthDate;
     private String email;
-
     private String bankName;
     private String bankNumber;
     private String photo;

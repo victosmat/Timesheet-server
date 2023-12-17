@@ -6,6 +6,7 @@ import com.manage.employeemanagementmodel.exception.EmployeeNotFoundException;
 import com.timesheet.dto.CheckInDto;
 import com.timesheet.dto.employee.BuddyDto;
 import com.timesheet.dto.employee.EmployeeFormDto;
+import com.timesheet.dto.employee.EmployeeSaveDto;
 import com.timesheet.dto.employee.IEmployeeProfileDto;
 import com.timesheet.dto.StaffViewDto;
 import org.springframework.data.domain.Page;
@@ -28,7 +29,7 @@ public interface EmployeeService {
 
     EmployeeFormDto findEmployeeFormById(Integer id) throws EmployeeNotFoundException;
 
-    Employee save(Employee employee);
+    Employee save(EmployeeSaveDto employeeSaveDto);
 
     void detete(Integer employeeId) throws EmployeeNotFoundException;
 

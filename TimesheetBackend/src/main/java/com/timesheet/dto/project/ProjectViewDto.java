@@ -1,7 +1,8 @@
 package com.timesheet.dto.project;
 
+import com.manage.employeemanagementmodel.entity.enums.ProjectStatus;
+
 import java.time.LocalDate;
-import java.util.List;
 
 public class ProjectViewDto {
     private Integer id;
@@ -12,8 +13,9 @@ public class ProjectViewDto {
     private Long totalEmployee;
     private LocalDate startDate;
     private LocalDate endDate;
+    private ProjectStatus projectStatus;
 
-    public ProjectViewDto(Integer id, String code, String name, String description, LocalDate startDate, LocalDate endDate, String pmName, Long totalEmployee) {
+    public ProjectViewDto(Integer id, String code, String name, String description, LocalDate startDate, LocalDate endDate, String pmName, Long totalEmployee, ProjectStatus projectStatus) {
         this.id = id;
         this.code = code;
         this.name = name;
@@ -22,6 +24,7 @@ public class ProjectViewDto {
         this.totalEmployee = totalEmployee;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.projectStatus = projectStatus;
     }
 
     public Integer getId() {
@@ -48,11 +51,11 @@ public class ProjectViewDto {
         this.name = name;
     }
 
-    public String getDescription(){
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description){
+    public void setDescription(String description) {
         this.description = description;
     }
 
@@ -84,7 +87,15 @@ public class ProjectViewDto {
         return endDate;
     }
 
-    public void setEndTime(LocalDate endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+    }
+
+    public ProjectStatus getProjectStatus() {
+        return projectStatus;
+    }
+
+    public void setProjectStatus(ProjectStatus projectStatus) {
+        this.projectStatus = projectStatus;
     }
 }

@@ -1,9 +1,5 @@
 
 A
 java:S1452N"&Remove usage of generic wildcard type.(Ô½òŸøÿÿÿÿ
-G
-java:S1602]",Remove useless curly braces around statement(şÇƒ¿ûÿÿÿÿ
-B
-java:S1602g",Remove useless curly braces around statement(Éò±”
 <
-java:S1452m"&Remove usage of generic wildcard type.(Â–Ş
+java:S1452i"&Remove usage of generic wildcard type.(Â–Ş

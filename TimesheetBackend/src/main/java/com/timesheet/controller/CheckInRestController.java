@@ -86,23 +86,19 @@ public class CheckInRestController {
     }
 
     //    @Scheduled(cron = "0 * ${spring.scheduled.hour.structure} * * ${spring.scheduled.day}")
-    @Scheduled(cron = "0 2 20 * * *")
+    @Scheduled(cron = "0 30 17 * * *")
     public void checkPunishmentCheckin() {
         LocalDate localDate = LocalDate.now();
         List<Integer> employeeIdsNotAbsenceInDay = checkInService.getAllEmployeeNotAbsenceInDay(localDate);
-        employeeIdsNotAbsenceInDay.forEach(employeeId -> {
-            checkInService.checkPunishmentCheckin(employeeId, localDate);
-        });
+        employeeIdsNotAbsenceInDay.forEach(employeeId -> checkInService.checkPunishmentCheckin(employeeId, localDate));
     }
 
     //    @Scheduled(cron = "0 0 0 * * ${spring.scheduled.day}")
-    @Scheduled(cron = "0 0 20 * * *")
+    @Scheduled(cron = "0 36 8 * * *")
     public void initDateCheckin() {
         LocalDateTime localDateTime = LocalDateTime.now();
         List<Employee> employees = employeeRepository.findAll();
-        employees.forEach(employee -> {
-            checkInService.saveInitDate(employee.getId(), localDateTime);
-        });
+        employees.forEach(employee -> checkInService.saveInitDate(employee.getId(), localDateTime));
     }
 
     @PutMapping("update_status")

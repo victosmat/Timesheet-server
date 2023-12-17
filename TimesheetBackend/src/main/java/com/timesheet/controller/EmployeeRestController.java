@@ -71,14 +71,14 @@ public class EmployeeRestController {
 
     @GetMapping("page")
     public Page<IEmployeeProfileDto> listByPage(@RequestParam(name = "pageNum") Integer pageNum,
-                                              @RequestParam(name = "pageSize") Integer pageSize,
-                                              @RequestParam(name = "sortField") String sortField,
-                                              @RequestParam(name = "sortDir") String sortDir,
-                                              @RequestParam(name = "keyword") String keyword,
-                                              @RequestParam(name = "isEnable", required = false) String isEnable,
-                                              @RequestParam(name = "level", required = false) String departmentLevelStatus,
-                                              @RequestParam(name = "type", required = false) String jobDepartment,
-                                              @RequestParam(name = "branch", required = false) String department) {
+                                                @RequestParam(name = "pageSize") Integer pageSize,
+                                                @RequestParam(name = "sortField") String sortField,
+                                                @RequestParam(name = "sortDir") String sortDir,
+                                                @RequestParam(name = "keyword") String keyword,
+                                                @RequestParam(name = "isEnable", required = false) String isEnable,
+                                                @RequestParam(name = "level", required = false) String departmentLevelStatus,
+                                                @RequestParam(name = "type", required = false) String jobDepartment,
+                                                @RequestParam(name = "branch", required = false) String department) {
         if (!isEnable.isEmpty())
             return employeeService.listByPageWithIsEnable(pageNum, pageSize, sortField, sortDir, keyword, isEnable.equals("ACTIVE"), departmentLevelStatus, jobDepartment, department);
         return employeeService.listByPage(pageNum, pageSize, sortField, sortDir, keyword, departmentLevelStatus, jobDepartment, department);
@@ -120,46 +120,8 @@ public class EmployeeRestController {
     }
 
     @PostMapping("save")
-    public ResponseEntity<Employee> saveEmployee(
-            @RequestParam(value = "id", required = false) Integer id,
-            @RequestParam("email") String email,
-            @RequestParam("firstName") String firstName,
-            @RequestParam("lastName") String lastName,
-            @RequestParam("gender") Gender gender,
-            @RequestParam("birthDate") LocalDate birthDate,
-            @RequestParam("hiringDate") LocalDate hiringDate,
-            @RequestParam("enabled") boolean enabled,
-            @RequestParam("photo") String photo,
-            @RequestParam("departmentLevelStatus") DepartmentLevelStatus departmentLevelStatus,
-            @RequestParam(value = "buddyId", required = false) Integer buddyId,
-            @RequestParam("departmentId") Integer departmentId,
-            @RequestParam("accountId") Integer accountId,
-            @RequestParam("jobDepartmentId") Integer jobDepartmentId,
-            @RequestParam(name = "image") MultipartFile photoFile) throws IOException, MessagingException {
-        EmployeeFormDto employeeFormDto = new EmployeeFormDto(id, email, firstName, lastName, gender, birthDate, hiringDate, enabled, photo, departmentLevelStatus, buddyId, departmentId, accountId, jobDepartmentId);
-        log.info("EmployeeFormDto: " + employeeFormDto);
-        String type = (employeeFormDto.getId() != null) ? "UPDATE" : "NEW";
-        Employee employee = employeeFormMapper.employeeFormDtoToEmployee(employeeFormDto);
-        if (employee.getBuddy().getId() == null) {
-            employee.setBuddy(null);
-        }
-        Employee savedEmployee;
-        if (!photoFile.isEmpty()) {
-            String fileName = StringUtils.cleanPath(Objects.requireNonNull(photoFile.getOriginalFilename()));
-            employee.setPhoto(fileName);
-            savedEmployee = employeeService.save(employee);
-            String uploadDirectory = "employee-photos/" + savedEmployee.getId();
-            FileUploadUtil.cleanDir(uploadDirectory);
-            FileUploadUtil.saveFile(uploadDirectory, fileName, photoFile);
-            emailService.sendEmailToPM(employee, type);
-        } else {
-            if (employee.getPhoto().isEmpty()) {
-                employee.setPhoto(null);
-            }
-            savedEmployee = employeeService.save(employee);
-            emailService.sendEmailToPM(employee, type);
-        }
-        return (savedEmployee != null) ? ResponseEntity.ok(savedEmployee) : ResponseEntity.ok(null);
+    public ResponseEntity<?> saveEmployee(@RequestBody EmployeeSaveDto employeeSaveDto) {
+        return ResponseEntity.ok(employeeService.save(employeeSaveDto));
     }
 
     @PostMapping("save_account")
@@ -280,7 +242,7 @@ public class EmployeeRestController {
             bank.setName(bankName);
             bank.setNumber(bankNumber);
             employee.setBank(bank);
-            return ResponseEntity.ok(employeeService.save(employee).getBank());
+            return ResponseEntity.ok(employeeRepository.save(employee).getBank());
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.ok(null);
@@ -292,7 +254,7 @@ public class EmployeeRestController {
         try {
             Employee employee = employeeService.getEmployeeById(id);
             employee.setEnabled(isEnable);
-            return ResponseEntity.ok(employeeService.save(employee));
+            return ResponseEntity.ok(employeeRepository.save(employee));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.ok(null);

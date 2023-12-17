@@ -57,7 +57,8 @@ public class ProjectRestController {
                 projectViewDto.getPmName(),
                 projectViewDto.getTotalEmployee(),
                 projectViewDto.getStartDate().toString(),
-                projectViewDto.getEndDate().toString()
+                projectViewDto.getEndDate().toString(),
+                projectViewDto.getProjectStatus()
         );
     }
 

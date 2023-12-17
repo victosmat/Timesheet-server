@@ -1,15 +1,17 @@
 package com.timesheet.service.impl;
 
-import com.manage.employeemanagementmodel.entity.Employee;
-import com.manage.employeemanagementmodel.entity.enums.DepartmentLevelStatus;
+import com.manage.employeemanagementmodel.entity.*;
 import com.manage.employeemanagementmodel.exception.EmployeeNotFoundException;
 import com.timesheet.dto.CheckInDto;
 import com.timesheet.dto.employee.BuddyDto;
 import com.timesheet.dto.employee.EmployeeFormDto;
+import com.timesheet.dto.employee.EmployeeSaveDto;
 import com.timesheet.dto.employee.IEmployeeProfileDto;
 import com.timesheet.dto.StaffViewDto;
 import com.timesheet.dto.mapper.employee.EmployeeFormMapper;
+import com.timesheet.repository.DepartmentRepository;
 import com.timesheet.repository.EmployeeRepository;
+import com.timesheet.repository.JobDepartmentRepository;
 import com.timesheet.service.EmployeeService;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Scope;
@@ -31,10 +33,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     static int a = 0;
     private final EmployeeRepository employeeRepository;
     private final EmployeeFormMapper employeeFormMapper;
+    private final DepartmentRepository departmentRepository;
+    private final JobDepartmentRepository jobDepartmentRepository;
 
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository, EmployeeFormMapper employeeFormMapper) {
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository, EmployeeFormMapper employeeFormMapper, DepartmentRepository departmentRepository, JobDepartmentRepository jobDepartmentRepository) {
         this.employeeRepository = employeeRepository;
         this.employeeFormMapper = employeeFormMapper;
+        this.departmentRepository = departmentRepository;
+        this.jobDepartmentRepository = jobDepartmentRepository;
         a++;
         System.out.println(a);
     }
@@ -92,8 +98,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee save(Employee employee) {
-        return employeeRepository.save(employee);
+    public Employee save(EmployeeSaveDto employeeSaveDto) {
+        Bank bank = new Bank(null, employeeSaveDto.getBankName(), employeeSaveDto.getBankNumber());
+        List<BuddyDto> buddyDtos = getBuddys();
+        Employee buddy = employeeRepository.findById(buddyDtos.stream().filter(b -> b.getName().equals(employeeSaveDto.getBuddyName())).findFirst().get().getId()).orElse(null);
+        Department department = departmentRepository.getDepartmentByName(employeeSaveDto.getDepartmentName());
+        JobDepartment jobDepartment = jobDepartmentRepository.getJobDepartmentByJobDepartment(employeeSaveDto.getJobDepartment());
+//        Account account = new Account(null, employeeSaveDto.getUsername(), employeeSaveDto.getPassword(), true);
+//        Employee employee = new Employee(null, employeeSaveDto.getFirstName(), employeeSaveDto.getLastName(), employeeSaveDto.getGender(), employeeSaveDto.getBirthday(), employeeSaveDto.getHiringDate(), employeeSaveDto.getEmail(), null, true, buddy, department, null, employeeSaveDto.getIsAdmin(), employeeSaveDto.getIsManager(), employeeSaveDto.getIsBuddy(), employeeSaveDto.getIsStaff(), employeeSaveDto.getIsIntern(), employeeSaveDto.getIsTrainee(), employeeSaveDto.getIsComplain(),);
+        return null;
     }
 
     @Override

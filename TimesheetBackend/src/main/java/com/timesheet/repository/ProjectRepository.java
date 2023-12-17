@@ -26,7 +26,8 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
             "   WHERE ep.project.id = project.id AND ep.roleProjectType = 'PM'" +
             "), " +
             "(" +
-            "SELECT COUNT(ep) FROM EmployeeProject ep WHERE ep.project.id = project.id)" +
+            "SELECT COUNT(ep) FROM EmployeeProject ep WHERE ep.project.id = project.id), " +
+            "project.projectStatus" +
             ") " +
             "FROM Project project " +
             "WHERE project.name LIKE %?1%")
@@ -39,7 +40,8 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
             "   WHERE ep.project.id = project.id AND ep.roleProjectType = 'PM'" +
             "), " +
             "(" +
-            "SELECT COUNT(ep) FROM EmployeeProject ep WHERE ep.project.id = project.id)" +
+            "SELECT COUNT(ep) FROM EmployeeProject ep WHERE ep.project.id = project.id), " +
+            "project.projectStatus" +
             ") " +
             "FROM Project project " +
             "WHERE project.projectStatus = ?1 AND project.name LIKE %?2%")
