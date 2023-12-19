@@ -4,3 +4,9 @@ java:S6208>"CMerge the previous cases into this one using comma-separated label
 P
 java:S1172$"5Remove this unused method parameter "noteRepository".(ÇÇÆÛþÿÿÿÿ
 E	java:S1062"+Replace this use of System.out by a logger.(ÎòˆÈùÿÿÿÿ
+\
+java:S1128":Remove this unused import 'ch.qos.logback.classic.Logger'.(™Ððöøÿÿÿÿ8‰–ìµÇ1
+n
+java:S1128"LRemove this unused import 'com.timesheet.controller.EmployeeRestController'.(¤‡Ô¹úÿÿÿÿ8‰–ìµÇ1
+Q
+java:S1128"4Remove this unused import 'org.slf4j.LoggerFactory'.(–ÿÚÞ8‰–ìµÇ1

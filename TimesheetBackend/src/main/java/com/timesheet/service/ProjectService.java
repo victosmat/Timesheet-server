@@ -19,4 +19,6 @@ public interface ProjectService {
     ProjectSaveDto saveProject(ProjectSaveDto projectSaveDto);
 
     Boolean deleteProject(Integer projectId);
+
+    Boolean updateProjectStatus(Integer projectId, ProjectStatus projectStatus);
 }

@@ -1,5 +1,6 @@
 package com.timesheet.controller;
 
+import com.manage.employeemanagementmodel.entity.Bonus;
 import com.manage.employeemanagementmodel.entity.enums.ProjectStatus;
 import com.timesheet.dto.project.*;
 import com.timesheet.service.ProjectService;
@@ -76,5 +77,11 @@ public class ProjectRestController {
     @DeleteMapping("/delete")
     public ResponseEntity<?> deleteProject(@RequestParam("projectId") Integer projectId) {
         return ResponseEntity.ok(projectService.deleteProject(projectId));
+    }
+
+    @PutMapping("/update_status")
+    public ResponseEntity<Boolean> updateProjectStatus(@RequestParam("projectId") Integer projectId,
+                                                     @RequestParam("status") ProjectStatus status) {
+        return ResponseEntity.ok(projectService.updateProjectStatus(projectId, status));
     }
 }

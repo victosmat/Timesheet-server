@@ -12,4 +12,6 @@ public interface PayslipService {
     void initPayslip();
 
     Page<PayslipDto> viewPayslip(Pageable pageable, String keyword, Boolean paymentStatus, DepartmentLevelStatus level, String branch, Integer month, Integer year);
+
+    Boolean updatePayslip(Integer id, Boolean paymentStatus);
 }

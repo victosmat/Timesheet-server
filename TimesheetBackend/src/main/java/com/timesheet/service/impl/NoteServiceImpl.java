@@ -99,8 +99,8 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public void updatePendingTimesheetStatus(int timesheetId, TimeSheetStatus status) {
-        noteRepository.updatePendingTimesheetStatus(timesheetId, status);
+    public void updatePendingTimesheetStatus(List<Integer> timesheetId, TimeSheetStatus status) {
+        timesheetId.forEach(id -> noteRepository.updatePendingTimesheetStatus(id, status));
     }
 
     @Override

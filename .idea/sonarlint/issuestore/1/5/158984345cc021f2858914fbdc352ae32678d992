@@ -1,0 +1,40 @@
+
+r	java:S116'"QRename this field "LOGGER" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Òíƒ…øÿÿÿÿ8æş¸Ç1
+E
+java:S4274F"(Replace this assert with a proper check.(³’‘¥8’æş¸Ç1
+C
+java:S1452N"&Remove usage of generic wildcard type.(ãÇ—‘8–æş¸Ç1
+C
+java:S1452Y"&Remove usage of generic wildcard type.(’­Éø8—æş¸Ç1
+C
+java:S1452c"&Remove usage of generic wildcard type.(ÿÑõ­8™æş¸Ç1
+H
+java:S1452m"&Remove usage of generic wildcard type.(¦¾±üÿÿÿÿ8šæş¸Ç1
+I
+java:S1452"&Remove usage of generic wildcard type.(í÷éÑÿÿÿÿÿ8æş¸Ç1
+D
+java:S1452‹"&Remove usage of generic wildcard type.(°‡ßá8Ÿæş¸Ç1
+I
+java:S1452”"&Remove usage of generic wildcard type.(°ø¼Õüÿÿÿÿ8¡æş¸Ç1
+I
+java:S1452"&Remove usage of generic wildcard type.(Ò·ùßùÿÿÿÿ8£æş¸Ç1
+D
+java:S1452©"&Remove usage of generic wildcard type.(Ê“©ê8¥æş¸Ç1
+m
+java:S1128"KRemove this unused import 'com.manage.employeemanagementmodel.entity.Note'.(†æåĞÿÿÿÿÿ8Çàÿ¸Ç1
+{
+java:S1128"YRemove this unused import 'com.manage.employeemanagementmodel.entity.enums.PriorityType'.(ŞÑ÷ìşÿÿÿÿ8Èàÿ¸Ç1
+y
+java:S1128"WRemove this unused import 'com.manage.employeemanagementmodel.entity.enums.TaskStatus'.( Ä¹¼şÿÿÿÿ8Éàÿ¸Ç1
+w
+java:S1128"URemove this unused import 'com.manage.employeemanagementmodel.entity.enums.TaskType'.(…àŠ¨ıÿÿÿÿ8Ëàÿ¸Ç1
+W
+java:S1128";Remove this unused import 'com.timesheet.dto.note.NoteDto'.(Æõ‹C8Îàÿ¸Ç1
+j
+java:S1128"HRemove this unused import 'org.springframework.web.client.RestTemplate'.(Îö¼Şûÿÿÿÿ8Ïàÿ¸Ç1
+L
+java:S1068'"*Remove this unused "LOGGER" private field.(Òíƒ…øÿÿÿÿ8«æş¸Ç1
+W
+java:S1068)"5Remove this unused "permissionService" private field.(ÿ”ÿ¯ÿÿÿÿÿ8«æş¸Ç1
+M
+java:S1068,"0Remove this unused "jwtTokenUtil" private field.(ù†Üï8«æş¸Ç1

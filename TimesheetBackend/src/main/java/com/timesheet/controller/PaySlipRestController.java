@@ -10,10 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -52,5 +49,11 @@ public class PaySlipRestController {
             paymentStatusBoolean = Boolean.parseBoolean(paymentStatus);
 
         return ResponseEntity.ok(payslipService.viewPayslip(pageable, keyword, paymentStatusBoolean, level, branch, month, year));
+    }
+
+    @PutMapping("update_payslip")
+    public ResponseEntity<Boolean> updatePayslip(@RequestParam(name = "id") Integer id,
+                                                     @RequestParam(name = "paymentStatus") Boolean paymentStatus) {
+        return ResponseEntity.ok(payslipService.updatePayslip(id, paymentStatus));
     }
 }

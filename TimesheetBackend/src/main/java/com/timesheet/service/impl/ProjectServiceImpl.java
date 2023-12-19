@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Transactional
@@ -85,6 +86,15 @@ public class ProjectServiceImpl implements ProjectService {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    @Override
+    public Boolean updateProjectStatus(Integer projectId, ProjectStatus projectStatus) {
+        Project project = projectRepository.findById(projectId).orElse(null);
+        if (Objects.isNull(project)) return false;
+        project.setProjectStatus(projectStatus);
+        projectRepository.save(project);
+        return true;
     }
 
     private Project getProject(ProjectSaveDto projectSaveDto, Project project) {

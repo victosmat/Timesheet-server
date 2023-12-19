@@ -86,7 +86,7 @@ public class CheckInRestController {
     }
 
     //    @Scheduled(cron = "0 * ${spring.scheduled.hour.structure} * * ${spring.scheduled.day}")
-    @Scheduled(cron = "0 30 17 * * *")
+    @Scheduled(cron = "0 53 19 * * *")
     public void checkPunishmentCheckin() {
         LocalDate localDate = LocalDate.now();
         List<Integer> employeeIdsNotAbsenceInDay = checkInService.getAllEmployeeNotAbsenceInDay(localDate);
@@ -94,7 +94,7 @@ public class CheckInRestController {
     }
 
     //    @Scheduled(cron = "0 0 0 * * ${spring.scheduled.day}")
-    @Scheduled(cron = "0 36 8 * * *")
+    @Scheduled(cron = "0 26 10 * * *")
     public void initDateCheckin() {
         LocalDateTime localDateTime = LocalDateTime.now();
         List<Employee> employees = employeeRepository.findAll();

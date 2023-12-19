@@ -1,14 +1,9 @@
 package com.timesheet.controller;
 
-import com.manage.employeemanagementmodel.entity.Note;
-import com.manage.employeemanagementmodel.entity.enums.PriorityType;
-import com.manage.employeemanagementmodel.entity.enums.TaskStatus;
-import com.manage.employeemanagementmodel.entity.enums.TaskType;
 import com.manage.employeemanagementmodel.entity.enums.TimeSheetStatus;
 import com.timesheet.configuration.security.jwt.JwtTokenUtil;
 import com.timesheet.dto.NoteComment.NoteCommentViewDto;
 import com.timesheet.dto.note.NoteDetailDto;
-import com.timesheet.dto.note.NoteDto;
 import com.timesheet.dto.note.NoteFormDto;
 import com.timesheet.dto.note.NotesPerDayDto;
 import com.timesheet.dto.project.ProjectSelectDto;
@@ -25,7 +20,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -36,22 +30,16 @@ import java.util.List;
 @RequestMapping("app/notes")
 @SecurityRequirement(name = "bearer-key")
 public class NoteRestController {
-    private final Logger LOGGER = LoggerFactory.getLogger(NoteRestController.class);
     private final NoteService noteService;
-    private final PermissionService permissionService;
     private final ProjectService projectService;
     private final TaskService taskService;
-    private final JwtTokenUtil jwtTokenUtil;
 
-    public NoteRestController(NoteService noteService, PermissionService permissionService, ProjectService projectService, TaskService taskService, JwtTokenUtil jwtTokenUtil) {
+    public NoteRestController(NoteService noteService, ProjectService projectService, TaskService taskService) {
         this.noteService = noteService;
-        this.permissionService = permissionService;
         this.projectService = projectService;
         this.taskService = taskService;
-        this.jwtTokenUtil = jwtTokenUtil;
     }
 
-    //    @PreAuthorize("hasAnyAuthority(@permissionService.getApiPermission(#request.getRequestURL().toString()))")
     @GetMapping("notes_by_week")
     public ResponseEntity<List<NotesPerDayDto>> getNotesListByWeekNumber(@RequestParam("employeeId") Integer employeeId,
                                                                          @RequestParam("weekNumber") Integer weekNumber) {
@@ -166,7 +154,7 @@ public class NoteRestController {
     }
 
     @PutMapping("update_staff_timesheet_status")
-    public ResponseEntity<?> updateTimesheetStatus(@RequestParam("noteId") Integer noteId, @RequestParam("status") TimeSheetStatus status) {
+    public ResponseEntity<?> updateTimesheetStatus(@RequestParam("noteId") List<Integer> noteId, @RequestParam("status") TimeSheetStatus status) {
         try {
             noteService.updatePendingTimesheetStatus(noteId, status);
         } catch (Exception e) {

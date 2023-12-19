@@ -14,7 +14,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface TaskRepository extends JpaRepository<Task, Integer> {
-    @Query("SELECT new com.timesheet.dto.task.TaskSelectDto(task.id, CONCAT(task.name,': ',task.description)) FROM Task task WHERE task.project.id = ?1")
+    @Query("SELECT new com.timesheet.dto.task.TaskSelectDto(task.id, CONCAT(task.name, ': ', task.description)) FROM Task task WHERE task.project.id = ?1 AND task.taskStatus != 'DONE'")
     List<TaskSelectDto> findAllByProjectId(Integer projectId);
 
     @Query("SELECT new com.timesheet.dto.task.TaskSaveSto(task.id, task.name, task.description, task.taskType, task.taskStatus, task.priorityType, task.project.id) " +

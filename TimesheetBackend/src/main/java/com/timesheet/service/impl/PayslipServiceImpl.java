@@ -48,8 +48,17 @@ public class PayslipServiceImpl implements PayslipService {
     @Override
     public Page<PayslipDto> viewPayslip(Pageable pageable, String keyword, Boolean paymentStatus, DepartmentLevelStatus level, String branch, Integer month, Integer year) {
         if (Objects.nonNull(paymentStatus))
-            return paySlipRepository.viewPayslipByStatus(pageable, keyword, paymentStatus, level, branch, month, year);
-        return paySlipRepository.viewPayslip(pageable, keyword, level, branch, month, year);
+            return paySlipRepository.viewPayslipByStatus(keyword, paymentStatus, level, month, year, branch, pageable);
+        return paySlipRepository.viewPayslip(keyword, level, month, year, branch, pageable);
+    }
+
+    @Override
+    public Boolean updatePayslip(Integer id, Boolean paymentStatus) {
+        Payslip payslip = paySlipRepository.findById(id).orElse(null);
+        if (Objects.isNull(payslip)) return false;
+        payslip.setPaymentStatus(paymentStatus);
+        paySlipRepository.save(payslip);
+        return true;
     }
 
 

@@ -23,7 +23,7 @@ public interface NoteService {
     List<NoteSummaryDto> getTotalTimesheetHoursForEachDayInSpecificMonthAndYear(NoteSummaryRequestDto noteSummaryRequestDto);
     Long getOpenTalkCount(CheckInRequestDto request);
     Map<TimeSheetStatus, List<NoteViewDto>> listAllPendingTimesheetOfStaffInParticularMonthAndYear(int staffId, int month, int year);
-    void updatePendingTimesheetStatus(int timesheetId, TimeSheetStatus status);
+    void updatePendingTimesheetStatus(List<Integer> timesheetId, TimeSheetStatus status);
 
     List<Note> listAllNoteByEmployee(Integer id);
 
