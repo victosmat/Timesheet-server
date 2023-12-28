@@ -13,7 +13,6 @@
     <modules>
         <module>EmployeeManagementModel</module>
         <module>TimesheetBackend</module>
-        <module>Job</module>
     </modules>
 
 </project>

@@ -16,4 +16,6 @@ public interface EmployeeBonusService {
     List<EmployeeBonus> getAll(String bonusName, Integer month, Integer year, Integer employeeId);
 
     EmployeeBonus save(EmployeeBonusSaveDto employeeBonusSaveDto);
+
+    void delete(Integer id);
 }

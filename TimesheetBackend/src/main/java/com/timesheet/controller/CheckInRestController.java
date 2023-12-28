@@ -16,6 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.*;
 import java.util.List;
@@ -86,7 +87,7 @@ public class CheckInRestController {
     }
 
     //    @Scheduled(cron = "0 * ${spring.scheduled.hour.structure} * * ${spring.scheduled.day}")
-    @Scheduled(cron = "0 53 19 * * *")
+    @Scheduled(cron = "0 40 17 * * *")
     public void checkPunishmentCheckin() {
         LocalDate localDate = LocalDate.now();
         List<Integer> employeeIdsNotAbsenceInDay = checkInService.getAllEmployeeNotAbsenceInDay(localDate);
@@ -94,11 +95,18 @@ public class CheckInRestController {
     }
 
     //    @Scheduled(cron = "0 0 0 * * ${spring.scheduled.day}")
-    @Scheduled(cron = "0 26 10 * * *")
+    @Scheduled(cron = "0 13 10 * * *")
     public void initDateCheckin() {
         LocalDateTime localDateTime = LocalDateTime.now();
         List<Employee> employees = employeeRepository.findAll();
         employees.forEach(employee -> checkInService.saveInitDate(employee.getId(), localDateTime));
+    }
+
+    @Scheduled(cron = "0 12 20 * * *")
+    public void trainModelImageClassification() {
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "http://127.0.0.1:5000/train_model";
+        restTemplate.getForObject(url, String.class);
     }
 
     @PutMapping("update_status")

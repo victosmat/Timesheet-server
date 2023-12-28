@@ -15,7 +15,7 @@ public class NoteMapDto {
     private String note;
     private LocalDate dateSubmit;
     private LocalDate dateModify;
-    private Integer workingTime;
+    private Float workingTime;
     private String taskDes;
     private TaskStatus taskStatus;
     private WorkingType workingType;
@@ -25,7 +25,7 @@ public class NoteMapDto {
     private String comment;
     private Boolean isReaded;
 
-    public NoteMapDto(Integer noteId, ProjectOptionDto projectOptionDto, EmployeeViewNoteDto employeeViewNoteDto, String note, LocalDate dateSubmit, LocalDate dateModify, Integer workingTime, String taskCode, TaskStatus taskStatus, WorkingType workingType, TimeSheetStatus status, Integer noteCommentId, String comment, Boolean isReaded) {
+    public NoteMapDto(Integer noteId, ProjectOptionDto projectOptionDto, EmployeeViewNoteDto employeeViewNoteDto, String note, LocalDate dateSubmit, LocalDate dateModify, Float workingTime, String taskCode, TaskStatus taskStatus, WorkingType workingType, TimeSheetStatus status, Integer noteCommentId, String comment, Boolean isReaded) {
         this.noteId = noteId;
         this.projectOptionDto = projectOptionDto;
         this.employeeViewNoteDto = employeeViewNoteDto;
@@ -90,11 +90,11 @@ public class NoteMapDto {
         this.dateModify = dateModify;
     }
 
-    public Integer getWorkingTime() {
+    public Float getWorkingTime() {
         return workingTime;
     }
 
-    public void setWorkingTime(Integer workingTime) {
+    public void setWorkingTime(Float workingTime) {
         this.workingTime = workingTime;
     }
 

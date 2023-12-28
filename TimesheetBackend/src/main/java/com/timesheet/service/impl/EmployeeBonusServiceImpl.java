@@ -67,9 +67,10 @@ public class EmployeeBonusServiceImpl implements EmployeeBonusService {
 
     @Override
     public EmployeeBonus save(EmployeeBonusSaveDto employeeBonusSaveDto) {
+        LocalDate dateBonus = LocalDate.now();
         if (employeeBonusSaveDto.getId() == null) {
             EmployeeBonus employeeBonus = new EmployeeBonus();
-            employeeBonus.setDateBonus(employeeBonusSaveDto.getDateBonus());
+            employeeBonus.setDateBonus(dateBonus);
             employeeBonus.setReason(employeeBonusSaveDto.getReason());
             employeeBonus.setEmployee(employeeRepository.findById(employeeBonusSaveDto.getEmployeeId()).orElse(null));
             employeeBonus.setBonus(bonusRepository.findById(employeeBonusSaveDto.getBonusId()).orElse(null));
@@ -79,10 +80,15 @@ public class EmployeeBonusServiceImpl implements EmployeeBonusService {
         if (employeeBonus == null) {
             return null;
         }
-        employeeBonus.setDateBonus(employeeBonusSaveDto.getDateBonus());
+        employeeBonus.setDateBonus(dateBonus);
         employeeBonus.setReason(employeeBonusSaveDto.getReason());
         employeeBonus.setEmployee(employeeRepository.findById(employeeBonusSaveDto.getEmployeeId()).orElse(null));
         employeeBonus.setBonus(bonusRepository.findById(employeeBonusSaveDto.getBonusId()).orElse(null));
         return employeeBonusRepository.save(employeeBonus);
+    }
+
+    @Override
+    public void delete(Integer id) {
+        employeeBonusRepository.deleteById(id);
     }
 }

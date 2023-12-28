@@ -45,4 +45,10 @@ public class TaskRestController {
         Pageable pageable = PageRequest.of(pageNum - 1, pageSize, sort);
         return ResponseEntity.ok(taskService.listAllTaskDetailByProjectId(projectId, keyword, taskType, taskStatus, priorityType, pageable));
     }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> delete(@RequestParam("id") Integer id) {
+        taskService.delete(id);
+        return ResponseEntity.ok().build();
+    }
 }

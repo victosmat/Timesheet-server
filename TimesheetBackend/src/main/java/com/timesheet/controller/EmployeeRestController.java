@@ -36,25 +36,17 @@ public class EmployeeRestController {
     private static final Logger log = (Logger) LoggerFactory.getLogger(EmployeeRestController.class);
     private final JwtTokenUtil jwtTokenUtil;
     private final EmployeeService employeeService;
-    private final DepartmentService departmentService;
-    private final JobDepartmentService jobDepartmentService;
     private final EmployeeRepository employeeRepository;
-    private final EmployeeFormMapper employeeFormMapper;
-    private final EmailService emailService;
     private final NoteService noteService;
     private final RoleService roleService;
     private final AccountService accountService;
 
     private final PasswordEncoder passwordEncoder;
 
-    public EmployeeRestController(JwtTokenUtil jwtTokenUtil, EmployeeService employeeService, DepartmentService departmentService, JobDepartmentService jobDepartmentService, EmployeeRepository employeeRepository, EmployeeFormMapper employeeFormMapper, EmailService emailService, NoteService noteService, RoleService roleService, AccountService accountService, PasswordEncoder passwordEncoder) {
+    public EmployeeRestController(JwtTokenUtil jwtTokenUtil, EmployeeService employeeService, EmployeeRepository employeeRepository, NoteService noteService, RoleService roleService, AccountService accountService, PasswordEncoder passwordEncoder) {
         this.jwtTokenUtil = jwtTokenUtil;
         this.employeeService = employeeService;
-        this.departmentService = departmentService;
-        this.jobDepartmentService = jobDepartmentService;
         this.employeeRepository = employeeRepository;
-        this.employeeFormMapper = employeeFormMapper;
-        this.emailService = emailService;
         this.noteService = noteService;
         this.roleService = roleService;
         this.accountService = accountService;
@@ -250,6 +242,17 @@ public class EmployeeRestController {
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.ok(null);
+        }
+    }
+
+    @DeleteMapping("delete")
+    public ResponseEntity<?> delete(@RequestParam("id") Integer id) {
+        try {
+            employeeService.detete(id);
+            return ResponseEntity.ok(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.ok(false);
         }
     }
 }

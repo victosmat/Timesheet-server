@@ -19,7 +19,7 @@ public interface NoteRepository extends JpaRepository<Note, Integer> {
     @Query("SELECT note FROM Note note WHERE note.employee.id = :id")
     List<Note> findAllByEmployeeId(@Param("id") Integer id);
 
-    @Query("SELECT new com.timesheet.dto.note.NoteViewDto(note.id, note.task.project.name, note.task.name, note.note, note.workingTime, note.dateSubmit, note.status, COALESCE(nc.comment, NULL)) " +
+    @Query("SELECT new com.timesheet.dto.note.NoteViewDto(note.id, note.task.project.name, note.task.name, note.note, note.workingTime, note.dateSubmit, note.dateModify, note.status, COALESCE(nc.comment, NULL), nc.isReaded) " +
             "FROM Note note " +
             "LEFT JOIN NoteComment nc ON nc.note.id = note.id " +
             "WHERE WEEK(note.dateSubmit) = :weekNumber AND note.employee.id = :employeeId ORDER BY note.dateSubmit ASC")
@@ -33,11 +33,11 @@ public interface NoteRepository extends JpaRepository<Note, Integer> {
             "WHERE WEEK(note.dateSubmit) BETWEEN (?1 - 1) AND (?1) AND note.status = com.manage.employeemanagementmodel.entity.enums.TimeSheetStatus.NEW")
     void pendingAllNewTimesheetRequest(Integer currentWeekNumber);
 
-    @Query("SELECT new com.timesheet.dto.note.NoteFormDto(note.id, note.employee.id, note.task.project.id, note.task.id, note.note, note.workingTime, note.workingType, note.dateSubmit, note.status, note.dateModify, nc.comment) " +
+    @Query("SELECT new com.timesheet.dto.note.NoteFormDto(note.id, note.employee.id, note.task.project.id, note.task.id, note.note, note.workingTime, note.workingType, note.dateSubmit, note.dateModify, note.status, nc.comment, note.dateSubmit) " +
             "FROM Note note " +
             "LEFT JOIN NoteComment nc ON nc.note.id = note.id " +
             "WHERE note.id = ?1")
-    NoteFormDto getNoteFormById(@Param("id") Integer id);
+    NoteFormDto getNoteFormById(Integer id);
 
     @Query("SELECT new com.timesheet.dto.note.NoteSummaryDto(note.dateSubmit, SUM(note.workingTime)) FROM Note note WHERE MONTH(note.dateSubmit) = :#{#request.month} AND YEAR(note.dateSubmit) = :#{#request.year} AND note.employee.id = :#{#request.employeeId}" +
             " AND note.status IN :#{#request.statuses} GROUP BY note.dateSubmit")
@@ -47,7 +47,7 @@ public interface NoteRepository extends JpaRepository<Note, Integer> {
     Long getOpenTalkCount(CheckInRequestDto request);
 
     @Query("SELECT new com.timesheet.dto.note.NoteViewDto(note.id, note.task.project.name" +
-            ", note.task.name, note.note, note.workingTime, note.dateSubmit, note.status, nc.comment) " +
+            ", note.task.name, note.note, note.workingTime, note.dateSubmit,note.dateModify, note.status, nc.comment, nc.isReaded) " +
             "FROM Note note " +
             "LEFT JOIN NoteComment nc ON nc.note.id = note.id " +
             "WHERE MONTH(note.dateSubmit) = ?2 AND YEAR(note.dateSubmit) = ?3 AND note.employee.id = ?1 ORDER BY note.dateSubmit ASC")

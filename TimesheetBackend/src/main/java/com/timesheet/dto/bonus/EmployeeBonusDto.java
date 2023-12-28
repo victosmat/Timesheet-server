@@ -1,19 +1,19 @@
 package com.timesheet.dto.bonus;
 
-import jakarta.persistence.Column;
-
 import java.time.LocalDate;
 
 public class EmployeeBonusDto {
     private Integer id;
+    private Integer bonusId;
     private String name;
     private String description;
     private LocalDate dateBonus;
     private String reason;
     private Long gratuity;
 
-    public EmployeeBonusDto(Integer id, String name, String description, LocalDate dateBonus, String reason, Long gratuity) {
+    public EmployeeBonusDto(Integer id, Integer bonusId, String name, String description, LocalDate dateBonus, String reason, Long gratuity) {
         this.id = id;
+        this.bonusId = bonusId;
         this.name = name;
         this.description = description;
         this.dateBonus = dateBonus;
@@ -27,6 +27,14 @@ public class EmployeeBonusDto {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getBonusId() {
+        return bonusId;
+    }
+
+    public void setBonusId(Integer bonusId) {
+        this.bonusId = bonusId;
     }
 
     public String getName() {

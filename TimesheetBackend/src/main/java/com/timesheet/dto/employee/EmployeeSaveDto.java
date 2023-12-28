@@ -14,17 +14,17 @@ public class EmployeeSaveDto {
     private String bankName;
     private String bankNumber;
     private LocalDate hiringDate;
-    private String buddyName;
-    private String departmentName;
+    private Integer buddyId;
+    private Integer departmentId;
     private String username;
     private String password;
-    private String jobDepartment;
+    private Integer jobDepartmentId;
     private DepartmentLevelStatus level;
 
     public EmployeeSaveDto() {
     }
 
-    public EmployeeSaveDto(Integer id, String firstName, Gender gender, LocalDate birthday, String email, String lastName, String bankName, String bankNumber, LocalDate hiringDate, String buddyName, String departmentName, String username, String password, String jobDepartment, DepartmentLevelStatus level) {
+    public EmployeeSaveDto(Integer id, String firstName, Gender gender, LocalDate birthday, String email, String lastName, String bankName, String bankNumber, LocalDate hiringDate, Integer buddyId, Integer departmentId, String username, String password, Integer jobDepartmentId, DepartmentLevelStatus level) {
         this.id = id;
         this.firstName = firstName;
         this.gender = gender;
@@ -34,11 +34,11 @@ public class EmployeeSaveDto {
         this.bankName = bankName;
         this.bankNumber = bankNumber;
         this.hiringDate = hiringDate;
-        this.buddyName = buddyName;
-        this.departmentName = departmentName;
+        this.buddyId = buddyId;
+        this.departmentId = departmentId;
         this.username = username;
         this.password = password;
-        this.jobDepartment = jobDepartment;
+        this.jobDepartmentId = jobDepartmentId;
         this.level = level;
     }
 
@@ -114,20 +114,20 @@ public class EmployeeSaveDto {
         this.hiringDate = hiringDate;
     }
 
-    public String getBuddyName() {
-        return buddyName;
+    public Integer getBuddyId() {
+        return buddyId;
     }
 
-    public void setBuddyName(String buddyName) {
-        this.buddyName = buddyName;
+    public void setBuddyId(Integer buddyId) {
+        this.buddyId = buddyId;
     }
 
-    public String getDepartmentName() {
-        return departmentName;
+    public Integer getDepartmentId() {
+        return departmentId;
     }
 
-    public void setDepartmentName(String departmentName) {
-        this.departmentName = departmentName;
+    public void setDepartmentId(Integer departmentId) {
+        this.departmentId = departmentId;
     }
 
     public String getUsername() {
@@ -146,12 +146,12 @@ public class EmployeeSaveDto {
         this.password = password;
     }
 
-    public String getJobDepartment() {
-        return jobDepartment;
+    public Integer getJobDepartmentId() {
+        return jobDepartmentId;
     }
 
-    public void setJobDepartment(String jobDepartment) {
-        this.jobDepartment = jobDepartment;
+    public void setJobDepartmentId(Integer jobDepartmentId) {
+        this.jobDepartmentId = jobDepartmentId;
     }
 
     public DepartmentLevelStatus getLevel() {

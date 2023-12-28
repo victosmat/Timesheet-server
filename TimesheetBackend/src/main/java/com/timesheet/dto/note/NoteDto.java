@@ -14,7 +14,7 @@ public class NoteDto {
     private String note;
     private LocalDate dateSubmit;
     private LocalDate dateModify;
-    private Integer workingTime;
+    private Float workingTime;
     private String projectDes;
     private String taskDes;
     private TaskStatus taskStatus;
@@ -27,7 +27,7 @@ public class NoteDto {
     private String comment;
     private Boolean isReaded;
 
-    public NoteDto(Integer noteId, Integer employeeId, Integer projectId, String note, LocalDate dateSubmit, LocalDate dateModify, Integer workingTime, String projectDes, String taskCode, TaskStatus taskStatus, WorkingType workingType, TimeSheetStatus status, String employeeName, DepartmentLevelStatus employeeLevel, String employeeDepartment, Integer noteCommentId, String comment, Boolean isReaded) {
+    public NoteDto(Integer noteId, Integer employeeId, Integer projectId, String note, LocalDate dateSubmit, LocalDate dateModify, Float workingTime, String projectDes, String taskCode, TaskStatus taskStatus, WorkingType workingType, TimeSheetStatus status, String employeeName, DepartmentLevelStatus employeeLevel, String employeeDepartment, Integer noteCommentId, String comment, Boolean isReaded) {
         this.noteId = noteId;
         this.employeeId = employeeId;
         this.projectId = projectId;
@@ -96,11 +96,11 @@ public class NoteDto {
         this.dateModify = dateModify;
     }
 
-    public Integer getWorkingTime() {
+    public Float getWorkingTime() {
         return workingTime;
     }
 
-    public void setWorkingTime(Integer workingTime) {
+    public void setWorkingTime(Float workingTime) {
         this.workingTime = workingTime;
     }
 

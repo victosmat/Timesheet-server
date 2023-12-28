@@ -51,6 +51,9 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public Note saveNote(NoteFormDto noteFormDto) {
         Note note = noteFormDtoMapper.noteFormDtoToNote(noteFormDto);
+        note.setDateModify(LocalDate.now());
+        if (noteFormDto.getId() != null) note.setId(noteFormDto.getId());
+        else note.setDateSubmit(noteFormDto.getCreatedDate());
         return noteRepository.save(note);
     }
 

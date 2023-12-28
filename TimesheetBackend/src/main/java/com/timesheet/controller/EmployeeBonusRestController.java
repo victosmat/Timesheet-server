@@ -50,4 +50,10 @@ public class EmployeeBonusRestController {
     public ResponseEntity<EmployeeBonus> save(@RequestBody EmployeeBonusSaveDto employeeBonusSaveDto) {
         return ResponseEntity.ok(employeeBonusService.save(employeeBonusSaveDto));
     }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> delete(@RequestParam("id") Integer id) {
+        employeeBonusService.delete(id);
+        return ResponseEntity.ok().build();
+    }
 }

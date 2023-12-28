@@ -112,7 +112,7 @@ public class CascadeTypesTest {
         note.setNote("This is a note");
         note.setDateSubmit(LocalDate.now());
         note.setDateModify(LocalDate.now());
-        note.setWorkingTime(8);
+        note.setWorkingTime(8.5F);
         note.setStatus(TimeSheetStatus.NEW);
         note.setWorkingType(WorkingType.ONSITE);
         Task task = new Task();

@@ -10,7 +10,7 @@ public class NoteFormDtoUser implements Serializable {
     private Integer id;
     private String note;
     private LocalDate dateSubmit;
-    private Integer workingTime;
+    private Float workingTime;
     private Integer taskId;
     private WorkingType workingType;
     private TimeSheetStatus status;
@@ -19,7 +19,7 @@ public class NoteFormDtoUser implements Serializable {
     public NoteFormDtoUser() {
     }
 
-    public NoteFormDtoUser(Integer id, String note, LocalDate dateSubmit, Integer workingTime, Integer taskId, WorkingType workingType, TimeSheetStatus status, Integer employeeId) {
+    public NoteFormDtoUser(Integer id, String note, LocalDate dateSubmit, Float workingTime, Integer taskId, WorkingType workingType, TimeSheetStatus status, Integer employeeId) {
         this.id = id;
         this.note = note;
         this.dateSubmit = dateSubmit;
@@ -54,11 +54,11 @@ public class NoteFormDtoUser implements Serializable {
         this.dateSubmit = dateSubmit;
     }
 
-    public Integer getWorkingTime() {
+    public Float getWorkingTime() {
         return workingTime;
     }
 
-    public void setWorkingTime(Integer workingTime) {
+    public void setWorkingTime(Float workingTime) {
         this.workingTime = workingTime;
     }
 

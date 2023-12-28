@@ -4,12 +4,12 @@ import java.time.LocalDate;
 
 public class NoteSummaryDto {
     private LocalDate date;
-    private Long totalHours;
+    private Double totalHours;
 
     public NoteSummaryDto() {
     }
 
-    public NoteSummaryDto(LocalDate date, Long totalHours) {
+    public NoteSummaryDto(LocalDate date, Double totalHours) {
         this.date = date;
         this.totalHours = totalHours;
     }
@@ -22,11 +22,11 @@ public class NoteSummaryDto {
         this.date = date;
     }
 
-    public Long getTotalHours() {
+    public Double getTotalHours() {
         return totalHours;
     }
 
-    public void setTotalHours(Long totalHours) {
+    public void setTotalHours(Double totalHours) {
         this.totalHours = totalHours;
     }
 }

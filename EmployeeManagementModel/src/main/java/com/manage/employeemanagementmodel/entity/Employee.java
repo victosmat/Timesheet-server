@@ -20,9 +20,9 @@ public class Employee implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "first_name", nullable = false, length = 255)
+    @Column(name = "first_name", nullable = false)
     private String firstName;
-    @Column(name = "last_name", nullable = false, length = 255)
+    @Column(name = "last_name", nullable = false)
     private String lastName;
     @Column(name = "gender", nullable = false)
     @Enumerated(EnumType.STRING)
@@ -31,9 +31,9 @@ public class Employee implements Serializable {
     private LocalDate birthDate;
     @Column(name = "hiring_date", nullable = false)
     private LocalDate hiringDate;
-    @Column(name = "email", nullable = false, length = 255)
+    @Column(name = "email", nullable = false)
     private String email;
-    @Column(name = "photo", length = 255)
+    @Column(name = "photo")
     private String photo;
     @Column(name = "enabled")
     private boolean enabled;
@@ -109,6 +109,22 @@ public class Employee implements Serializable {
         this.absences = absences;
         this.employeeLevelStatus = employeeLevelStatus;
         this.employeeProjects = employeeProjects;
+        this.bank = bank;
+    }
+
+    public Employee(String firstName, String lastName, Gender gender, LocalDate birthDate, LocalDate hiringDate, String email, boolean enabled, Employee buddy, Department department, Account account, JobDepartment jobDepartment, DepartmentLevelStatus employeeLevelStatus, Bank bank) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.birthDate = birthDate;
+        this.hiringDate = hiringDate;
+        this.email = email;
+        this.enabled = enabled;
+        this.buddy = buddy;
+        this.department = department;
+        this.account = account;
+        this.jobDepartment = jobDepartment;
+        this.employeeLevelStatus = employeeLevelStatus;
         this.bank = bank;
     }
 

@@ -6,9 +6,11 @@ public class EmployeeBonusSaveDto {
     private Integer id;
     private LocalDate dateBonus;
     private String reason;
-
     private Integer employeeId;
     private Integer bonusId;
+
+    public EmployeeBonusSaveDto() {
+    }
 
     public EmployeeBonusSaveDto(Integer id, LocalDate dateBonus, String reason, Integer employeeId, Integer bonusId) {
         this.id = id;

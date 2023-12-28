@@ -35,6 +35,12 @@ public class Account implements Serializable {
         this.refreshToken = refreshToken;
     }
 
+    public Account(String username, String password, List<Role> roles) {
+        this.username = username;
+        this.password = password;
+        this.roles = roles;
+    }
+
     public Account() {
 
     }

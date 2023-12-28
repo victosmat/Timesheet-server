@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface EmployeeBonusRepository extends JpaRepository<EmployeeBonus, Integer> {
-    @Query("select new com.timesheet.dto.bonus.EmployeeBonusDto(eb.id,eb.bonus.name, eb.bonus.description, eb.dateBonus, eb.reason, eb.bonus.gratuity)" +
+    @Query("select new com.timesheet.dto.bonus.EmployeeBonusDto(eb.id, eb.bonus.id, eb.bonus.name, eb.bonus.description, eb.dateBonus, eb.reason, eb.bonus.gratuity)" +
             "from EmployeeBonus eb " +
             "where eb.employee.id = ?1")
     List<EmployeeBonusDto> getByEmployeeId(Integer employeeId);

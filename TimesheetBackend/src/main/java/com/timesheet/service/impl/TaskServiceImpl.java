@@ -52,6 +52,11 @@ public class TaskServiceImpl implements TaskService {
         return taskRepository.findAllTaskDetailByProjectId(projectId, keyword, taskType, taskStatus, priorityType, pageable);
     }
 
+    @Override
+    public void delete(Integer id) {
+        taskRepository.deleteById(id);
+    }
+
     private void saveTask(TaskSaveSto taskSaveSto, Task task) {
         task.setName(taskSaveSto.getName());
         task.setDescription(taskSaveSto.getDescription());

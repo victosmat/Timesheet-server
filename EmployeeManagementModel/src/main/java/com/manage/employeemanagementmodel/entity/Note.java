@@ -20,10 +20,10 @@ public class Note implements Serializable{
 	private String note;
 	@Column(name = "date_submit", nullable = false)
 	private LocalDate dateSubmit;
-	@Column(name = "date_modify", nullable = false)
+	@Column(name = "date_modify")
 	private LocalDate dateModify;
 	@Column(name = "working_time")
-	private Integer workingTime;
+	private Float workingTime;
 	@ManyToOne
 	@JoinColumn(name = "task_id", nullable = false)
 	private Task task;
@@ -40,7 +40,7 @@ public class Note implements Serializable{
 	public Note() {
 	}
 
-	public Note(Integer id, String note, LocalDate dateSubmit, LocalDate dateModify, Integer workingTime, Task task, WorkingType workingType, Employee employee, TimeSheetStatus status) {
+	public Note(Integer id, String note, LocalDate dateSubmit, LocalDate dateModify, Float workingTime, Task task, WorkingType workingType, Employee employee, TimeSheetStatus status) {
 		this.id = id;
 		this.note = note;
 		this.dateSubmit = dateSubmit;
@@ -76,11 +76,11 @@ public class Note implements Serializable{
 		this.dateSubmit = dateSubmit;
 	}
 
-	public Integer getWorkingTime() {
+	public Float getWorkingTime() {
 		return workingTime;
 	}
 
-	public void setWorkingTime(Integer workingTime) {
+	public void setWorkingTime(Float workingTime) {
 		this.workingTime = workingTime;
 	}
 

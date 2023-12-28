@@ -11,17 +11,17 @@ public class NoteFormDto {
     private Integer projectId;
     private Integer taskId;
     private String noteDescription;
-    private Integer workingTime;
+    private Float workingTime;
     private WorkingType workingType;
     private LocalDate dateSubmit;
     private LocalDate dateModify;
     private TimeSheetStatus status;
-
     private String comment;
+    private LocalDate createdDate;
+
     public NoteFormDto() {
     }
-
-    public NoteFormDto(Integer id, Integer employeeId, Integer projectId, Integer taskId, String noteDescription, Integer workingTime, WorkingType workingType, LocalDate dateSubmit, TimeSheetStatus status, LocalDate dateModify, String comment) {
+    public NoteFormDto(Integer id, Integer employeeId, Integer projectId, Integer taskId, String noteDescription, Float workingTime, WorkingType workingType, LocalDate dateSubmit, LocalDate dateModify, TimeSheetStatus status, String comment, LocalDate createdDate) {
         this.id = id;
         this.employeeId = employeeId;
         this.projectId = projectId;
@@ -30,9 +30,18 @@ public class NoteFormDto {
         this.workingTime = workingTime;
         this.workingType = workingType;
         this.dateSubmit = dateSubmit;
-        this.status = status;
         this.dateModify = dateModify;
+        this.status = status;
         this.comment = comment;
+        this.createdDate = createdDate;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Integer getEmployeeId() {
@@ -41,6 +50,14 @@ public class NoteFormDto {
 
     public void setEmployeeId(Integer employeeId) {
         this.employeeId = employeeId;
+    }
+
+    public Integer getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Integer projectId) {
+        this.projectId = projectId;
     }
 
     public Integer getTaskId() {
@@ -59,11 +76,11 @@ public class NoteFormDto {
         this.noteDescription = noteDescription;
     }
 
-    public Integer getWorkingTime() {
+    public Float getWorkingTime() {
         return workingTime;
     }
 
-    public void setWorkingTime(Integer workingTime) {
+    public void setWorkingTime(Float workingTime) {
         this.workingTime = workingTime;
     }
 
@@ -75,20 +92,20 @@ public class NoteFormDto {
         this.workingType = workingType;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     public LocalDate getDateSubmit() {
         return dateSubmit;
     }
 
     public void setDateSubmit(LocalDate dateSubmit) {
         this.dateSubmit = dateSubmit;
+    }
+
+    public LocalDate getDateModify() {
+        return dateModify;
+    }
+
+    public void setDateModify(LocalDate dateModify) {
+        this.dateModify = dateModify;
     }
 
     public TimeSheetStatus getStatus() {
@@ -99,17 +116,6 @@ public class NoteFormDto {
         this.status = status;
     }
 
-    public Integer getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(Integer projectId) {
-        this.projectId = projectId;
-    }
-    public LocalDate getDateModify() {
-        return dateModify;
-    }
-
     public String getComment() {
         return comment;
     }
@@ -117,23 +123,12 @@ public class NoteFormDto {
     public void setComment(String comment) {
         this.comment = comment;
     }
-    public void setDateModify(LocalDate dateModify) {
-        this.dateModify = dateModify;
+
+    public LocalDate getCreatedDate() {
+        return createdDate;
     }
 
-    @Override
-    public String toString() {
-        return "NoteFormDto{" +
-                "id=" + id +
-                ", employeeId=" + employeeId +
-                ", projectId=" + projectId +
-                ", taskId=" + taskId +
-                ", noteDescription='" + noteDescription + '\'' +
-                ", workingTime=" + workingTime +
-                ", workingType=" + workingType +
-                ", dateSubmit=" + dateSubmit +
-                ", dateModify=" + dateModify +
-                ", status=" + status +
-                '}';
+    public void setCreatedDate(LocalDate createdDate) {
+        this.createdDate = createdDate;
     }
 }

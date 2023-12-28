@@ -16,4 +16,6 @@ public interface TaskService {
     TaskSaveSto saveTaskByProject(TaskSaveSto taskSaveSto);
 
     Page<TaskSaveSto> listAllTaskDetailByProjectId(Integer projectId, String keyword, TaskType taskType, TaskStatus taskStatus, PriorityType priorityType, Pageable pageable);
+
+    void delete(Integer id);
 }

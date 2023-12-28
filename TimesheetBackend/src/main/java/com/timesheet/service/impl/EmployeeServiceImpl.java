@@ -12,6 +12,7 @@ import com.timesheet.dto.mapper.employee.EmployeeFormMapper;
 import com.timesheet.repository.DepartmentRepository;
 import com.timesheet.repository.EmployeeRepository;
 import com.timesheet.repository.JobDepartmentRepository;
+import com.timesheet.repository.RoleRepository;
 import com.timesheet.service.EmployeeService;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Scope;
@@ -19,6 +20,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,12 +37,18 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeFormMapper employeeFormMapper;
     private final DepartmentRepository departmentRepository;
     private final JobDepartmentRepository jobDepartmentRepository;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final EmailServiceImpl emailServiceImpl;
 
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository, EmployeeFormMapper employeeFormMapper, DepartmentRepository departmentRepository, JobDepartmentRepository jobDepartmentRepository) {
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository, EmployeeFormMapper employeeFormMapper, DepartmentRepository departmentRepository, JobDepartmentRepository jobDepartmentRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, EmailServiceImpl emailServiceImpl) {
         this.employeeRepository = employeeRepository;
         this.employeeFormMapper = employeeFormMapper;
         this.departmentRepository = departmentRepository;
         this.jobDepartmentRepository = jobDepartmentRepository;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.emailServiceImpl = emailServiceImpl;
         a++;
         System.out.println(a);
     }
@@ -100,17 +108,25 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee save(EmployeeSaveDto employeeSaveDto) {
         Bank bank = new Bank(null, employeeSaveDto.getBankName(), employeeSaveDto.getBankNumber());
-        List<BuddyDto> buddyDtos = getBuddys();
-        Employee buddy = employeeRepository.findById(buddyDtos.stream().filter(b -> b.getName().equals(employeeSaveDto.getBuddyName())).findFirst().get().getId()).orElse(null);
-        Department department = departmentRepository.getDepartmentByName(employeeSaveDto.getDepartmentName());
-        JobDepartment jobDepartment = jobDepartmentRepository.getJobDepartmentByJobDepartment(employeeSaveDto.getJobDepartment());
-//        Account account = new Account(null, employeeSaveDto.getUsername(), employeeSaveDto.getPassword(), true);
-//        Employee employee = new Employee(null, employeeSaveDto.getFirstName(), employeeSaveDto.getLastName(), employeeSaveDto.getGender(), employeeSaveDto.getBirthday(), employeeSaveDto.getHiringDate(), employeeSaveDto.getEmail(), null, true, buddy, department, null, employeeSaveDto.getIsAdmin(), employeeSaveDto.getIsManager(), employeeSaveDto.getIsBuddy(), employeeSaveDto.getIsStaff(), employeeSaveDto.getIsIntern(), employeeSaveDto.getIsTrainee(), employeeSaveDto.getIsComplain(),);
-        return null;
+        Employee buddy = employeeRepository.findById(employeeSaveDto.getBuddyId()).orElseThrow();
+        Department department = departmentRepository.findById(employeeSaveDto.getDepartmentId()).orElseThrow();
+        Role role = roleRepository.findById(employeeSaveDto.getJobDepartmentId()).orElseThrow();
+        JobDepartment jobDepartment = jobDepartmentRepository.findByJobDepartment(role.getName()).orElseThrow();
+        Account account = new Account(employeeSaveDto.getUsername(), passwordEncoder.encode(employeeSaveDto.getPassword()), List.of(role));
+        Employee employee = new Employee(employeeSaveDto.getFirstName(), employeeSaveDto.getLastName(), employeeSaveDto.getGender(), employeeSaveDto.getBirthday(), employeeSaveDto.getHiringDate(), employeeSaveDto.getEmail(), true, buddy, department, account, jobDepartment, employeeSaveDto.getLevel(), bank);
+        if (employeeSaveDto.getId() != null) employee.setId(employeeSaveDto.getId());
+
+        employee = employeeRepository.save(employee);
+        if (employeeSaveDto.getId() == null) {
+            emailServiceImpl.sendEmailToPM(employee, "NEW");
+        } else {
+            emailServiceImpl.sendEmailToPM(employee, "UPDATE");
+        }
+        return employeeRepository.save(employee);
     }
 
     @Override
-    public void detete(Integer employeeId) throws EmployeeNotFoundException {
+    public void detete(Integer employeeId) {
         Employee employee = employeeRepository.findById(employeeId).get();
         if (employee.getBuddy() != null) {
             Set<Employee> employees = getSubEmployee(employee.getBuddy().getId());
