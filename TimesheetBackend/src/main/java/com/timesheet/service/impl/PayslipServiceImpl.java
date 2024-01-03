@@ -82,9 +82,9 @@ public class PayslipServiceImpl implements PayslipService {
     public Double getTotalSalary(Employee employee, Pageable pageable) {
         Calendar calendar = Calendar.getInstance();
 
-//        int month = (calendar.get(Calendar.MONTH) == Calendar.JANUARY) ? 12 : calendar.get(Calendar.MONTH);
-        int month = calendar.get(Calendar.MONTH) + 1;
-        int year = calendar.get(Calendar.YEAR);
+        int month = (calendar.get(Calendar.MONTH) == Calendar.JANUARY) ? 12 : calendar.get(Calendar.MONTH);
+//        int month = calendar.get(Calendar.MONTH) + 1;
+        int year = calendar.get(Calendar.YEAR) - 1;
         long salaryRange = employee.getJobDepartment().getSalaryRange();
         Double salaryRangeInHour = (double) (salaryRange / 20 / 8);
 

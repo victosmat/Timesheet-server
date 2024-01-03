@@ -25,7 +25,7 @@ public class PaySlipRestController {
         this.payslipService = payslipService;
     }
 
-    @Scheduled(cron = "0 0 0 1 * ?")
+        @Scheduled(cron = "0 0 0 1 * ?")
     public void initPayslip() {
         payslipService.initPayslip();
     }
@@ -53,7 +53,7 @@ public class PaySlipRestController {
 
     @PutMapping("update_payslip")
     public ResponseEntity<Boolean> updatePayslip(@RequestParam(name = "id") Integer id,
-                                                     @RequestParam(name = "paymentStatus") Boolean paymentStatus) {
+                                                 @RequestParam(name = "paymentStatus") Boolean paymentStatus) {
         return ResponseEntity.ok(payslipService.updatePayslip(id, paymentStatus));
     }
 }

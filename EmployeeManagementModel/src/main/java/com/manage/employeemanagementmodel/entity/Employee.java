@@ -62,7 +62,7 @@ public class Employee implements Serializable {
     @JoinColumn(name = "job_department_id", nullable = false)
     @JsonIgnore
     private JobDepartment jobDepartment;
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     @JsonIgnore
     private List<EmployeeBonus> employeeBonuses;
     @OneToMany(mappedBy = "employee", cascade = CascadeType.REMOVE)
@@ -72,7 +72,7 @@ public class Employee implements Serializable {
     @Column(name = "level_status")
     @Enumerated(EnumType.STRING)
     private DepartmentLevelStatus employeeLevelStatus;
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Absence> absences = new ArrayList<>();
 

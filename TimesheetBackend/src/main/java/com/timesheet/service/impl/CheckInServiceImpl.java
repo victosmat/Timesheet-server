@@ -170,17 +170,13 @@ public class CheckInServiceImpl implements CheckInService {
             Boolean isComplain, Pageable pageable, boolean isManage) {
 
         Page<CheckinPunishmentDto> checkinPunishmentDtoPage =
-                checkInRepository.getCheckinOfEmployeeAndPunishmentByStatus(employeeId, status, month, year, pageable);
+                checkInRepository.getCheckinOfEmployeeAndPunishmentByStatus(employeeId, status, month, year, isManage, pageable);
 
         List<CheckinPunishmentDto> checkinPunishmentDtoList = checkinPunishmentDtoPage.getContent();
 
         if (isComplain != null)
             checkinPunishmentDtoList = checkinPunishmentDtoList.stream()
                     .filter(checkinPunishmentDto -> isComplain.equals(checkinPunishmentDto.getComplain() != null)).toList();
-
-        if (isManage)
-            checkinPunishmentDtoList = checkinPunishmentDtoList.stream()
-                    .filter(checkinPunishmentDto -> checkinPunishmentDto.getPunishmentTypeDes() != null).toList();
 
         List<CheckinPunishmentResDto> checkinPunishmentResDtoList =
                 addCheckinPunishmentResDtos(checkinPunishmentDtoList);

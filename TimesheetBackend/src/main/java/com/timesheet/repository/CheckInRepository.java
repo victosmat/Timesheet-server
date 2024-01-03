@@ -44,8 +44,11 @@ public interface CheckInRepository extends JpaRepository<CheckIn, Integer> {
             "WHERE (checkIn.employee.id = ?1 OR ?1 IS NULL) " +
             "AND (checkIn.status = ?2 OR ?2 IS NULL) " +
             "AND (MONTH (checkIn.currentDate) = ?3 OR ?3 IS NULL) " +
-            "AND (YEAR (checkIn.currentDate) = ?4 OR ?4 IS NULL) ")
-    Page<CheckinPunishmentDto> getCheckinOfEmployeeAndPunishmentByStatus(Integer employeeId, CheckInStatus status, int month, int year, Pageable pageable);
+            "AND (YEAR (checkIn.currentDate) = ?4 OR ?4 IS NULL) " +
+            "AND (punishment.punishmentType.description IS NOT NULL OR ?5 = false) " )
+    Page<CheckinPunishmentDto> getCheckinOfEmployeeAndPunishmentByStatus(
+            Integer employeeId, CheckInStatus status, int month, int year,
+            boolean isManage, Pageable pageable);
 
     @Query("SELECT count(checkIn) FROM CheckIn checkIn WHERE checkIn.currentDate = ?1")
     int checkCurrentDateIsExist(LocalDateTime localDateTime);
