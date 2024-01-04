@@ -1,7 +1,6 @@
 package com.timesheet.repository;
 
 import com.manage.employeemanagementmodel.entity.Absence;
-import com.manage.employeemanagementmodel.entity.Employee;
 import com.manage.employeemanagementmodel.entity.enums.AbsenceStatus;
 import com.manage.employeemanagementmodel.entity.enums.TypeTimeOff;
 import com.timesheet.dto.absence.AbsenceDto;
@@ -30,8 +29,11 @@ public interface AbsenceRepository extends JpaRepository<Absence, Integer> {
 
     @Query("SELECT new com.timesheet.dto.absence.AbsenceDto(absence.id, absence.reason, absence.employee.id, CONCAT(absence.employee.firstName, ' ', absence.employee.lastName) , absence.dateRequest, absence.dateSubmit, absence.typeTimeOff,absence.timeOff, absence.status, absence.punishmentStatus) " +
             "FROM Absence absence " +
-            "WHERE MONTH(absence.dateRequest) = ?1 AND YEAR(absence.dateRequest) = ?2 AND absence.employee.id = ?3")
-    Page<AbsenceDto> listAllAbsenceRequestInMonthAndYearOfEmployee(Integer month, Integer year, Integer employeeId, Pageable pageable);
+            "WHERE MONTH(absence.dateRequest) = ?1 " +
+            "AND YEAR(absence.dateRequest) = ?2 " +
+            "AND (absence.status = ?3 OR ?3 IS NULL) " +
+            "AND absence.employee.id = ?4")
+    Page<AbsenceDto> listAllAbsenceRequestInMonthAndYearOfEmployee(Integer month, Integer year, AbsenceStatus absenceStatus, Integer employeeId, Pageable pageable);
 
     @Query("SELECT absence.dateRequest FROM Absence absence WHERE MONTH(absence.dateRequest) = ?1 AND YEAR(absence.dateRequest) = ?2 AND absence.employee.id = ?3")
     List<LocalDate> ListAllDayAbsenceInParticularMonthAndYearOfEmployee(Integer month, Integer year, Integer employeeId);

@@ -14,6 +14,9 @@ public class TaskSaveSto {
     private PriorityType priorityType;
     private Integer projectId;
 
+    public TaskSaveSto() {
+    }
+
     public TaskSaveSto(Integer id, String name, String description, TaskType taskType, TaskStatus taskStatus, PriorityType priorityType, Integer projectId) {
         this.id = id;
         this.name = name;

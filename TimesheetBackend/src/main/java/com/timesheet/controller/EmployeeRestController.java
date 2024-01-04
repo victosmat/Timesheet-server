@@ -33,7 +33,6 @@ import java.util.Objects;
 @RequestMapping("/app/employees")
 @SecurityRequirement(name = "bearer-key")
 public class EmployeeRestController {
-    private static final Logger log = (Logger) LoggerFactory.getLogger(EmployeeRestController.class);
     private final JwtTokenUtil jwtTokenUtil;
     private final EmployeeService employeeService;
     private final EmployeeRepository employeeRepository;

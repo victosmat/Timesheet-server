@@ -44,4 +44,6 @@ public interface EmployeeService {
     List<BuddyDto> getBuddys();
 
     Page<IEmployeeProfileDto> listByPage(Integer pageNum, Integer pageSize, String sortField, String sortDir, String keyword, String departmentLevelStatus, String jobDepartment, String department);
+
+    Employee getEmployeeByEmployeeId(Integer employeeId) throws EmployeeNotFoundException;
 }

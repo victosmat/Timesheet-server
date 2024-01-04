@@ -19,6 +19,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/app/absence")
@@ -48,11 +49,12 @@ public class AbsenceRestController {
                                                              @RequestParam(name = "sortDir") String sortDir,
                                                              @RequestParam("month") Integer monthNumber,
                                                              @RequestParam("year") Integer yearNumber,
+                                                             @RequestParam(value = "status", required = false) AbsenceStatus absenceStatus,
                                                              @RequestParam("employeeId") Integer employeeId) {
         Sort sort = Sort.by(sortField);
         sort = (sortDir.equals("asc")) ? sort.ascending() : sort.descending();
         Pageable pageable = PageRequest.of(pageNum - 1, pageSize, sort);
-        return ResponseEntity.ok(absenceService.listAllAbsenceRequestInMonthAndYearOfEmployee(monthNumber, yearNumber, employeeId, pageable));
+        return ResponseEntity.ok(absenceService.listAllAbsenceRequestInMonthAndYearOfEmployee(monthNumber, yearNumber, absenceStatus, employeeId, pageable));
     }
 
     @GetMapping("get_all_absence_of_month")

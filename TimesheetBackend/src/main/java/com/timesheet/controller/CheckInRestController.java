@@ -95,14 +95,14 @@ public class CheckInRestController {
     }
 
     //    @Scheduled(cron = "0 0 0 * * ${spring.scheduled.day}")
-    @Scheduled(cron = "0 27 14 * * *")
+    @Scheduled(cron = "0 13 11 * * *")
     public void initDateCheckin() {
         LocalDateTime localDateTime = LocalDateTime.now();
         List<Employee> employees = employeeRepository.findAll();
         employees.forEach(employee -> checkInService.saveInitDate(employee.getId(), localDateTime));
     }
 
-    @Scheduled(cron = "0 12 20 * * *")
+    @Scheduled(cron = "0 5 15 * * *")
     public void trainModelImageClassification() {
         RestTemplate restTemplate = new RestTemplate();
         String url = "http://127.0.0.1:5000/train_model";

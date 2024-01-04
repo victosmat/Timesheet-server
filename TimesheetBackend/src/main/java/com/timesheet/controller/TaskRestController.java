@@ -25,7 +25,7 @@ public class TaskRestController {
         this.taskService = taskService;
     }
 
-    @GetMapping("/save_by_project")
+    @PostMapping("/save_by_project")
     public ResponseEntity<TaskSaveSto> saveTaskByProject(@RequestBody TaskSaveSto taskSaveSto) {
         return ResponseEntity.ok(taskService.saveTaskByProject(taskSaveSto));
     }

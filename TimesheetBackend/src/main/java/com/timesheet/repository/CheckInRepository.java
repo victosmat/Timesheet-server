@@ -37,18 +37,18 @@ public interface CheckInRepository extends JpaRepository<CheckIn, Integer> {
     CheckInDto getCheckInOfEmployeePerDay(Integer employeeId, LocalDate now);
 
 
-    @Query("SELECT new com.timesheet.dto.checkin.CheckinPunishmentDto(checkIn.id, checkIn.currentDate, checkIn.checkInTime, checkIn.checkOutTime,checkIn.status, pt.description, pt.punishmentMoney, punishment.complain,  punishment.complainReply, punishment.isDeleted) " +
+    @Query("SELECT new com.timesheet.dto.checkin.CheckinPunishmentDto(checkIn.id, checkIn.currentDate, checkIn.checkInTime, checkIn.checkOutTime, checkIn.status, pt.description, pt.punishmentMoney, punishment.complain, punishment.complainReply, punishment.isDeleted) " +
             "FROM CheckIn checkIn " +
             "LEFT JOIN Punishment punishment ON checkIn.id = punishment.checkIn.id " +
             "LEFT JOIN PunishmentType pt ON punishment.punishmentType.id = pt.id " +
             "WHERE (checkIn.employee.id = ?1 OR ?1 IS NULL) " +
             "AND (checkIn.status = ?2 OR ?2 IS NULL) " +
-            "AND (MONTH (checkIn.currentDate) = ?3 OR ?3 IS NULL) " +
-            "AND (YEAR (checkIn.currentDate) = ?4 OR ?4 IS NULL) " +
-            "AND (punishment.punishmentType.description IS NOT NULL OR ?5 = false) " )
-    Page<CheckinPunishmentDto> getCheckinOfEmployeeAndPunishmentByStatus(
-            Integer employeeId, CheckInStatus status, int month, int year,
-            boolean isManage, Pageable pageable);
+            "AND (MONTH(checkIn.currentDate) = ?3 OR ?3 IS NULL) " +
+            "AND (YEAR(checkIn.currentDate) = ?4 OR ?4 IS NULL) " +
+            "AND ((?5 = true AND pt.description IS NOT NULL) OR (?5 = false)) " +
+            "AND ((?6 = true AND punishment.complain IS NOT NULL) OR (?6 = false AND punishment.complain IS NULL) OR (?6 = null)) ")
+    Page<CheckinPunishmentDto> getCheckinOfEmployeeAndPunishmentByStatus(Integer employeeId, CheckInStatus status, int month, int year, boolean isManage, Boolean isComplain, Pageable pageable);
+
 
     @Query("SELECT count(checkIn) FROM CheckIn checkIn WHERE checkIn.currentDate = ?1")
     int checkCurrentDateIsExist(LocalDateTime localDateTime);

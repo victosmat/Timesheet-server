@@ -95,6 +95,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public Employee getEmployeeByEmployeeId(Integer employeeId) throws EmployeeNotFoundException {
+        return employeeRepository.findById(employeeId).orElseThrow(() -> new EmployeeNotFoundException("Employee not found with id: " + employeeId));
+    }
+
+    @Override
     public List<Employee> findAll() {
         return employeeRepository.findAll();
     }

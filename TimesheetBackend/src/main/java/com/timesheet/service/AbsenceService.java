@@ -1,5 +1,6 @@
 package com.timesheet.service;
 
+import com.manage.employeemanagementmodel.entity.Absence;
 import com.manage.employeemanagementmodel.entity.enums.AbsenceStatus;
 import com.manage.employeemanagementmodel.entity.enums.TypeTimeOff;
 import com.manage.employeemanagementmodel.exception.AbsenceRequestNotFoundException;
@@ -24,7 +25,7 @@ public interface AbsenceService {
 
     void updateAbsenceStatus(Integer absenceId, AbsenceStatus status);
 
-    Page<AbsenceDto> listAllAbsenceRequestInMonthAndYearOfEmployee(Integer month, Integer year, Integer employeeId, Pageable pageable);
+    Page<AbsenceDto> listAllAbsenceRequestInMonthAndYearOfEmployee(Integer month, Integer year, AbsenceStatus absenceStatus, Integer employeeId, Pageable pageable);
 
     List<LocalDate> ListAllDayAbsenceInParticularMonthAndYearOfEmployee(Integer month, Integer year, Integer employeeId);
 

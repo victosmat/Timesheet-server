@@ -32,8 +32,7 @@ public class AbsenceServiceImpl implements AbsenceService {
     private final AbsenceRepository absenceRepository;
     private final AbsenceDtoMapper absenceDtoMapper;
 
-    public AbsenceServiceImpl(AbsenceRepository absenceRepository, AbsenceDtoMapper absenceDtoMapper,
-                              NoteRepository noteRepository) {
+    public AbsenceServiceImpl(AbsenceRepository absenceRepository, AbsenceDtoMapper absenceDtoMapper) {
         this.absenceRepository = absenceRepository;
         this.absenceDtoMapper = absenceDtoMapper;
     }
@@ -102,8 +101,8 @@ public class AbsenceServiceImpl implements AbsenceService {
     }
 
     @Override
-    public Page<AbsenceDto> listAllAbsenceRequestInMonthAndYearOfEmployee(Integer month, Integer year, Integer employeeId, Pageable pageable) {
-        return absenceRepository.listAllAbsenceRequestInMonthAndYearOfEmployee(month, year, employeeId, pageable);
+    public Page<AbsenceDto> listAllAbsenceRequestInMonthAndYearOfEmployee(Integer month, Integer year, AbsenceStatus absenceStatus, Integer employeeId, Pageable pageable) {
+        return absenceRepository.listAllAbsenceRequestInMonthAndYearOfEmployee(month, year, absenceStatus, employeeId, pageable);
     }
 
     @Override
