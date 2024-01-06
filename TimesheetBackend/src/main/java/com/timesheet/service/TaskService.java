@@ -18,4 +18,6 @@ public interface TaskService {
     Page<TaskSaveSto> listAllTaskDetailByProjectId(Integer projectId, String keyword, TaskType taskType, TaskStatus taskStatus, PriorityType priorityType, Pageable pageable);
 
     void delete(Integer id);
+
+    Boolean updateStatus(Integer id, TaskStatus status);
 }

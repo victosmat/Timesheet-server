@@ -1,10 +1,9 @@
 package com.timesheet.service;
 
 import com.manage.employeemanagementmodel.entity.Employee;
-import jakarta.mail.MessagingException;
 
 public interface EmailService {
-	void sendEmailToPM(Employee employee, String type) throws MessagingException;
+	void sendEmailToPM(Employee employee, String type);
 
-	void sendEmailToEmployee(Employee employee, String independenceDay);
+	void sendEmailToEmployee(Employee employee, String type, String password);
 }

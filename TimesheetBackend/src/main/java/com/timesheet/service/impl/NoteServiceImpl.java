@@ -188,6 +188,7 @@ public class NoteServiceImpl implements NoteService {
                 noteDto.getWorkingTime(),
                 noteDto.getTaskCode(),
                 noteDto.getTaskStatus(),
+                noteDto.getTaskId(),
                 noteDto.getWorkingType(),
                 noteDto.getStatus(),
                 noteDto.getNoteCommentId(),

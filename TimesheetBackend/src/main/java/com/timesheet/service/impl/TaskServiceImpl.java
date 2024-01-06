@@ -57,6 +57,15 @@ public class TaskServiceImpl implements TaskService {
         taskRepository.deleteById(id);
     }
 
+    @Override
+    public Boolean updateStatus(Integer id, TaskStatus status) {
+        Task task = taskRepository.findById(id).orElse(null);
+        if (task == null) return false;
+        task.setTaskStatus(status);
+        taskRepository.save(task);
+        return true;
+    }
+
     private void saveTask(TaskSaveSto taskSaveSto, Task task) {
         task.setName(taskSaveSto.getName());
         task.setDescription(taskSaveSto.getDescription());

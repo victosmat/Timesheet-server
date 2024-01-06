@@ -11,8 +11,6 @@ import com.timesheet.repository.MailConfigRepository;
 import com.timesheet.service.EmailService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.InputStreamSource;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -77,7 +75,6 @@ public class EmailServiceImpl implements EmailService {
                 final Context ctx = new Context();
                 ctx.setVariable("genderCall", buddy.getGender() == Gender.MALE ? "Mr." : "Mrs.");
                 ctx.setVariable("name", buddy.getFullName());
-                ctx.setVariable("imageResourceName", "myPhoto");
                 if (type.equals("NEW")) {
                     ctx.setVariable("notifyText", "Notify to PM that he has new member!");
                     System.out.println("Notify to PM that he has new member!");
@@ -89,9 +86,6 @@ public class EmailServiceImpl implements EmailService {
                 // Create the HTML body using Thymeleaf
                 final String htmlContent = templateEngine.process("email/mail_notify_employee_details.html", ctx);
                 helper.setText(htmlContent, true);
-                // Add the inline image, referenced from the HTML code as "cid:${imageResourceName}"
-                InputStreamSource imageReSource = new FileSystemResource("employee-photos/" + employee.getId() + "/" + employee.getPhoto());
-                helper.addInline("myPhoto", imageReSource, "image/png");
                 //Send mail
                 mailSender.send(message);
             } catch (UnsupportedEncodingException | MessagingException e) {
@@ -103,7 +97,7 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendEmailToEmployee(Employee employee, String type) {
+    public void sendEmailToEmployee(Employee employee, String type, String password) {
         System.out.println("Email test:" + employee);
         MailConfig mailConfig = mailConfigRepository.findByType(MailType.NOTIFY_EMPLOYEE);
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
@@ -129,10 +123,14 @@ public class EmailServiceImpl implements EmailService {
             final Context ctx = new Context();
             ctx.setVariable("genderCall", employee.getGender() == Gender.MALE ? "Mr." : "Mrs.");
             ctx.setVariable("name", employee.getFullName());
-            ctx.setVariable("imageResourceName", "myPhoto");
             if (type.equals("NEW")) {
                 ctx.setVariable("notifyText", "Notice about your personal information!");
                 System.out.println("Notify to PM that he has new member!");
+
+                String username = employee.getAccount().getUsername();
+
+                ctx.setVariable("username", username);
+                ctx.setVariable("password", password);
             } else {
                 ctx.setVariable("notifyText", "Notice to you that HR has changed the information!");
                 System.out.println("Notify to PM that HR has changed his member's information!");
@@ -141,9 +139,7 @@ public class EmailServiceImpl implements EmailService {
             // Create the HTML body using Thymeleaf
             final String htmlContent = templateEngine.process("email/mail_notify_employee_details_to_employee.html", ctx);
             helper.setText(htmlContent, true);
-            // Add the inline image, referenced from the HTML code as "cid:${imageResourceName}"
-            InputStreamSource imageReSource = new FileSystemResource("employee-photos/" + employee.getId() + "/" + employee.getPhoto());
-            helper.addInline("myPhoto", imageReSource, "image/png");
+
             //Send mail
             mailSender.send(message);
         } catch (UnsupportedEncodingException | MessagingException e) {

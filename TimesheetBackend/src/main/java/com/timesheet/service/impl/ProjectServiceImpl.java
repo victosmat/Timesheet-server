@@ -1,7 +1,9 @@
 package com.timesheet.service.impl;
 
+import com.manage.employeemanagementmodel.entity.Employee;
 import com.manage.employeemanagementmodel.entity.EmployeeProject;
 import com.manage.employeemanagementmodel.entity.Project;
+import com.manage.employeemanagementmodel.entity.Role;
 import com.manage.employeemanagementmodel.entity.enums.ProjectStatus;
 import com.timesheet.dto.project.*;
 import com.timesheet.repository.EmployeeProjectRepository;
@@ -48,6 +50,11 @@ public class ProjectServiceImpl implements ProjectService {
     public ProjectDetailViewDto getProjectDetails(Integer projectId) {
         ProjectDetailDto projectDetailDto = projectRepository.getProjectDetails(projectId);
         List<EmployeeProjectDetailDto> employeeProjectDetailDtos = employeeProjectRepository.findAllEmployeeProjectDetailsByProjectId(projectId);
+        employeeProjectDetailDtos.forEach(employeeProjectDetailDto -> {
+            Employee employee = employeeRepository.findById(employeeProjectDetailDto.getEmployeeId()).orElse(null);
+            assert employee != null;
+            employeeProjectDetailDto.setRoles(String.join(", ", employee.getAccount().getRoles().stream().map(Role::getName).toList()));
+        });
         projectDetailDto.setProjectEmployeeSaveDtos(employeeProjectDetailDtos);
         return new ProjectDetailViewDto(
                 projectDetailDto.getId(),

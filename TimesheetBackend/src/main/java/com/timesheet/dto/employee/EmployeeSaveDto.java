@@ -4,11 +4,12 @@ import com.manage.employeemanagementmodel.entity.enums.DepartmentLevelStatus;
 import com.manage.employeemanagementmodel.entity.enums.Gender;
 
 import java.time.LocalDate;
+
 public class EmployeeSaveDto {
     private Integer id;
     private String firstName;
     private Gender gender;
-    private LocalDate birthday;
+    private LocalDate birthDate;
     private String email;
     private String lastName;
     private String bankName;
@@ -24,11 +25,11 @@ public class EmployeeSaveDto {
     public EmployeeSaveDto() {
     }
 
-    public EmployeeSaveDto(Integer id, String firstName, Gender gender, LocalDate birthday, String email, String lastName, String bankName, String bankNumber, LocalDate hiringDate, Integer buddyId, Integer departmentId, String username, String password, Integer jobDepartmentId, DepartmentLevelStatus level) {
+    public EmployeeSaveDto(Integer id, String firstName, Gender gender, LocalDate birthDate, String email, String lastName, String bankName, String bankNumber, LocalDate hiringDate, Integer buddyId, Integer departmentId, String username, String password, Integer jobDepartmentId, DepartmentLevelStatus level) {
         this.id = id;
         this.firstName = firstName;
         this.gender = gender;
-        this.birthday = birthday;
+        this.birthDate = birthDate;
         this.email = email;
         this.lastName = lastName;
         this.bankName = bankName;
@@ -66,12 +67,12 @@ public class EmployeeSaveDto {
         this.gender = gender;
     }
 
-    public LocalDate getBirthday() {
-        return birthday;
+    public LocalDate getBirthDate() {
+        return birthDate;
     }
 
-    public void setBirthday(LocalDate birthday) {
-        this.birthday = birthday;
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
     }
 
     public String getEmail() {

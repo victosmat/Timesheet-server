@@ -1,22 +1,17 @@
 package com.timesheet.controller;
 
-import ch.qos.logback.classic.Logger;
 import com.manage.employeemanagementmodel.entity.*;
-import com.manage.employeemanagementmodel.entity.enums.DepartmentLevelStatus;
-import com.manage.employeemanagementmodel.entity.enums.Gender;
 import com.manage.employeemanagementmodel.exception.EmployeeNotFoundException;
 import com.timesheet.configuration.security.jwt.JwtTokenUtil;
 import com.timesheet.dto.account.AccountRequestDto;
 import com.timesheet.dto.account.PasswordRequest;
 import com.timesheet.dto.account.RoleDto;
 import com.timesheet.dto.employee.*;
-import com.timesheet.dto.mapper.employee.EmployeeFormMapper;
 import com.timesheet.repository.EmployeeRepository;
 import com.timesheet.service.*;
 import com.timesheet.ultilities.FileUploadUtil;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.http.HttpServletRequest;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -103,7 +98,7 @@ public class EmployeeRestController {
     }
 
     @PostMapping("save")
-    public ResponseEntity<?> saveEmployee(@RequestBody EmployeeSaveDto employeeSaveDto) {
+    public ResponseEntity<Boolean> saveEmployee(@RequestBody EmployeeSaveDto employeeSaveDto) {
         return ResponseEntity.ok(employeeService.save(employeeSaveDto));
     }
 

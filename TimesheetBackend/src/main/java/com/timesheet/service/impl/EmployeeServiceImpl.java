@@ -14,6 +14,7 @@ import com.timesheet.repository.EmployeeRepository;
 import com.timesheet.repository.JobDepartmentRepository;
 import com.timesheet.repository.RoleRepository;
 import com.timesheet.service.EmployeeService;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Page;
@@ -106,33 +107,43 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeFormDto findEmployeeFormById(Integer id) throws EmployeeNotFoundException {
-        Employee employee = employeeRepository.findById(id).get();
+        Employee employee = employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFoundException("Employee not found with id: " + id));
         return employeeFormMapper.employeeToEmployeeFormDto(employee);
     }
 
     @Override
-    public Employee save(EmployeeSaveDto employeeSaveDto) {
+    @Transactional
+    public Boolean save(EmployeeSaveDto employeeSaveDto) {
         Bank bank = new Bank(null, employeeSaveDto.getBankName(), employeeSaveDto.getBankNumber());
-        Employee buddy = employeeRepository.findById(employeeSaveDto.getBuddyId()).orElseThrow();
+        Employee buddy = null;
+        if (employeeSaveDto.getBuddyId() != 0)
+            buddy = employeeRepository.findById(employeeSaveDto.getBuddyId()).orElseThrow();
         Department department = departmentRepository.findById(employeeSaveDto.getDepartmentId()).orElseThrow();
         Role role = roleRepository.findById(employeeSaveDto.getJobDepartmentId()).orElseThrow();
         JobDepartment jobDepartment = jobDepartmentRepository.findByJobDepartment(role.getName()).orElseThrow();
+        String password = employeeSaveDto.getPassword();
         Account account = new Account(employeeSaveDto.getUsername(), passwordEncoder.encode(employeeSaveDto.getPassword()), List.of(role));
-        Employee employee = new Employee(employeeSaveDto.getFirstName(), employeeSaveDto.getLastName(), employeeSaveDto.getGender(), employeeSaveDto.getBirthday(), employeeSaveDto.getHiringDate(), employeeSaveDto.getEmail(), true, buddy, department, account, jobDepartment, employeeSaveDto.getLevel(), bank);
+        Employee employee = new Employee(employeeSaveDto.getFirstName(), employeeSaveDto.getLastName(), employeeSaveDto.getGender(), employeeSaveDto.getBirthDate(), employeeSaveDto.getHiringDate(), employeeSaveDto.getEmail(), true, buddy, department, account, jobDepartment, employeeSaveDto.getLevel(), bank);
         if (employeeSaveDto.getId() != null) employee.setId(employeeSaveDto.getId());
 
-        employee = employeeRepository.save(employee);
-        if (employeeSaveDto.getId() == null) {
-            emailServiceImpl.sendEmailToPM(employee, "NEW");
-        } else {
-            emailServiceImpl.sendEmailToPM(employee, "UPDATE");
+        try {
+            employee = employeeRepository.save(employee);
+            if (employeeSaveDto.getId() == null) {
+                emailServiceImpl.sendEmailToPM(employee, "NEW");
+                emailServiceImpl.sendEmailToEmployee(employee, "NEW", password);
+            } else {
+                emailServiceImpl.sendEmailToPM(employee, "UPDATE");
+                emailServiceImpl.sendEmailToEmployee(employee, "UPDATE", Strings.EMPTY);
+            }
+            return true;
+        } catch (Exception e) {
+            return false;
         }
-        return employeeRepository.save(employee);
     }
 
     @Override
-    public void detete(Integer employeeId) {
-        Employee employee = employeeRepository.findById(employeeId).get();
+    public void detete(Integer employeeId) throws EmployeeNotFoundException {
+        Employee employee = employeeRepository.findById(employeeId).orElseThrow(() -> new EmployeeNotFoundException("Employee not found with id: " + employeeId));
         if (employee.getBuddy() != null) {
             Set<Employee> employees = getSubEmployee(employee.getBuddy().getId());
             System.out.println(employees);

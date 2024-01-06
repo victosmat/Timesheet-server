@@ -1,5 +1,6 @@
 package com.timesheet.controller;
 
+import com.manage.employeemanagementmodel.entity.Bonus;
 import com.manage.employeemanagementmodel.entity.enums.PriorityType;
 import com.manage.employeemanagementmodel.entity.enums.TaskStatus;
 import com.manage.employeemanagementmodel.entity.enums.TaskType;
@@ -50,5 +51,11 @@ public class TaskRestController {
     public ResponseEntity<?> delete(@RequestParam("id") Integer id) {
         taskService.delete(id);
         return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/update_status")
+    public ResponseEntity<Boolean> updateStatus(@RequestParam("taskId") Integer id,
+                                                @RequestParam("status") TaskStatus status) {
+        return ResponseEntity.ok(taskService.updateStatus(id, status));
     }
 }

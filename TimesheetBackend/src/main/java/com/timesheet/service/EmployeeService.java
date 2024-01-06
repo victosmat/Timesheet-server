@@ -1,7 +1,6 @@
 package com.timesheet.service;
 
 import com.manage.employeemanagementmodel.entity.Employee;
-import com.manage.employeemanagementmodel.entity.enums.DepartmentLevelStatus;
 import com.manage.employeemanagementmodel.exception.EmployeeNotFoundException;
 import com.timesheet.dto.CheckInDto;
 import com.timesheet.dto.employee.BuddyDto;
@@ -29,7 +28,7 @@ public interface EmployeeService {
 
     EmployeeFormDto findEmployeeFormById(Integer id) throws EmployeeNotFoundException;
 
-    Employee save(EmployeeSaveDto employeeSaveDto);
+    Boolean save(EmployeeSaveDto employeeSaveDto);
 
     void detete(Integer employeeId) throws EmployeeNotFoundException;
 

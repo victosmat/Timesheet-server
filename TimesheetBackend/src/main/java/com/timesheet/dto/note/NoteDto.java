@@ -16,6 +16,7 @@ public class NoteDto {
     private LocalDate dateModify;
     private Float workingTime;
     private String projectDes;
+    private Integer taskId;
     private String taskDes;
     private TaskStatus taskStatus;
     private WorkingType workingType;
@@ -27,7 +28,7 @@ public class NoteDto {
     private String comment;
     private Boolean isReaded;
 
-    public NoteDto(Integer noteId, Integer employeeId, Integer projectId, String note, LocalDate dateSubmit, LocalDate dateModify, Float workingTime, String projectDes, String taskCode, TaskStatus taskStatus, WorkingType workingType, TimeSheetStatus status, String employeeName, DepartmentLevelStatus employeeLevel, String employeeDepartment, Integer noteCommentId, String comment, Boolean isReaded) {
+    public NoteDto(Integer noteId, Integer employeeId, Integer projectId, String note, LocalDate dateSubmit, LocalDate dateModify, Float workingTime, String projectDes, Integer taskId, String taskCode, TaskStatus taskStatus, WorkingType workingType, TimeSheetStatus status, String employeeName, DepartmentLevelStatus employeeLevel, String employeeDepartment, Integer noteCommentId, String comment, Boolean isReaded) {
         this.noteId = noteId;
         this.employeeId = employeeId;
         this.projectId = projectId;
@@ -36,6 +37,7 @@ public class NoteDto {
         this.dateModify = dateModify;
         this.workingTime = workingTime;
         this.projectDes = projectDes;
+        this.taskId = taskId;
         this.taskDes = taskCode;
         this.taskStatus = taskStatus;
         this.workingType = workingType;
@@ -190,5 +192,21 @@ public class NoteDto {
 
     public void setReaded(Boolean readed) {
         isReaded = readed;
+    }
+
+    public String getTaskDes() {
+        return taskDes;
+    }
+
+    public void setTaskDes(String taskDes) {
+        this.taskDes = taskDes;
+    }
+
+    public Integer getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(Integer taskId) {
+        this.taskId = taskId;
     }
 }

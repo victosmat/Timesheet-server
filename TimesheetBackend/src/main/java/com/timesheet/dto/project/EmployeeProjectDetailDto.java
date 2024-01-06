@@ -1,7 +1,10 @@
 package com.timesheet.dto.project;
 
+import com.manage.employeemanagementmodel.entity.Role;
 import com.manage.employeemanagementmodel.entity.enums.DepartmentLevelStatus;
 import com.manage.employeemanagementmodel.entity.enums.RoleProjectType;
+
+import java.util.List;
 
 public class EmployeeProjectDetailDto {
     private Integer id;
@@ -10,6 +13,7 @@ public class EmployeeProjectDetailDto {
     private String email;
     private DepartmentLevelStatus departmentLevelStatus;
     private RoleProjectType roleProjectType;
+    private String roles;
 
     public EmployeeProjectDetailDto(Integer id, Integer employeeId, String employeeName, String email, DepartmentLevelStatus departmentLevelStatus, RoleProjectType roleProjectType) {
         this.id = id;
@@ -65,5 +69,13 @@ public class EmployeeProjectDetailDto {
 
     public void setRoleProjectType(RoleProjectType roleProjectType) {
         this.roleProjectType = roleProjectType;
+    }
+
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
     }
 }

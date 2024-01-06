@@ -12,6 +12,7 @@ public class NoteDetailViewDto {
     private LocalDate dateSubmit;
     private LocalDate dateModify;
     private Float workingTime;
+    private Integer taskId;
     private String taskDes;
     private TaskStatus taskStatus;
     private WorkingType workingType;
@@ -20,12 +21,13 @@ public class NoteDetailViewDto {
     private String comment;
     private Boolean isReaded;
 
-    public NoteDetailViewDto(Integer noteId, String note, LocalDate dateSubmit, LocalDate dateModify, Float workingTime, String taskDes, TaskStatus taskStatus, WorkingType workingType, TimeSheetStatus status, Integer noteCommentId, String comment, Boolean isReaded) {
+    public NoteDetailViewDto(Integer noteId, String note, LocalDate dateSubmit, LocalDate dateModify, Float workingTime, Integer taskId, String taskDes, TaskStatus taskStatus, WorkingType workingType, TimeSheetStatus status, Integer noteCommentId, String comment, Boolean isReaded) {
         this.noteId = noteId;
         this.note = note;
         this.dateSubmit = dateSubmit;
         this.dateModify = dateModify;
         this.workingTime = workingTime;
+        this.taskId = taskId;
         this.taskDes = taskDes;
         this.taskStatus = taskStatus;
         this.workingType = workingType;
@@ -129,5 +131,13 @@ public class NoteDetailViewDto {
 
     public void setReaded(Boolean readed) {
         isReaded = readed;
+    }
+
+    public Integer getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(Integer taskId) {
+        this.taskId = taskId;
     }
 }

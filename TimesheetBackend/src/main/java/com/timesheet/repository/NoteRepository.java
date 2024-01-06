@@ -73,6 +73,7 @@ public interface NoteRepository extends JpaRepository<Note, Integer> {
             "note.dateModify, " +
             "note.workingTime, " +
             "CONCAT(note.task.project.code,': ',note.task.project.name), " +
+            "note.task.id , " +
             "CONCAT(note.task.name,': ',note.task.description), " +
             "note.task.taskStatus, " +
             "note.workingType, " +
