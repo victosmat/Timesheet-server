@@ -85,6 +85,7 @@ public class EmployeeRestController {
                 employee.getGender(),
                 employee.getBirthDate().toString(),
                 employee.getEmail(),
+                employee.getBank().getId(),
                 employee.getBank().getName(),
                 employee.getBank().getNumber(),
                 employee.getPhoto(),
@@ -98,7 +99,7 @@ public class EmployeeRestController {
     }
 
     @PostMapping("save")
-    public ResponseEntity<Boolean> saveEmployee(@RequestBody EmployeeSaveDto employeeSaveDto) {
+    public ResponseEntity<Boolean> saveEmployee(@RequestBody EmployeeSaveDto employeeSaveDto) throws EmployeeNotFoundException {
         return ResponseEntity.ok(employeeService.save(employeeSaveDto));
     }
 

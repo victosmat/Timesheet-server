@@ -1,4 +1,4 @@
-package com.timesheet.dto.CheckinImage;
+package com.timesheet.dto.checkinImage;
 
 public class RecognizeFaceDTO {
     private String image;

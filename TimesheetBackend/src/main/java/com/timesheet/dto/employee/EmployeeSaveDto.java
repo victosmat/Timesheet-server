@@ -11,6 +11,7 @@ public class EmployeeSaveDto {
     private Gender gender;
     private LocalDate birthDate;
     private String email;
+    private Integer bankId;
     private String lastName;
     private String bankName;
     private String bankNumber;
@@ -25,12 +26,13 @@ public class EmployeeSaveDto {
     public EmployeeSaveDto() {
     }
 
-    public EmployeeSaveDto(Integer id, String firstName, Gender gender, LocalDate birthDate, String email, String lastName, String bankName, String bankNumber, LocalDate hiringDate, Integer buddyId, Integer departmentId, String username, String password, Integer jobDepartmentId, DepartmentLevelStatus level) {
+    public EmployeeSaveDto(Integer id, String firstName, Gender gender, LocalDate birthDate, String email, Integer bankId, String lastName, String bankName, String bankNumber, LocalDate hiringDate, Integer buddyId, Integer departmentId, String username, String password, Integer jobDepartmentId, DepartmentLevelStatus level) {
         this.id = id;
         this.firstName = firstName;
         this.gender = gender;
         this.birthDate = birthDate;
         this.email = email;
+        this.bankId = bankId;
         this.lastName = lastName;
         this.bankName = bankName;
         this.bankNumber = bankNumber;
@@ -41,6 +43,14 @@ public class EmployeeSaveDto {
         this.password = password;
         this.jobDepartmentId = jobDepartmentId;
         this.level = level;
+    }
+
+    public  Integer getBankId() {
+        return bankId;
+    }
+
+    public void setBankId(Integer bankId) {
+        this.bankId = bankId;
     }
 
     public Integer getId() {

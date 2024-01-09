@@ -13,6 +13,7 @@ public class EmployeeDetailDto {
     private Gender gender;
     private String birthDate;
     private String email;
+    private Integer bankId;
     private String bankName;
     private String bankNumber;
     private String photo;
@@ -24,13 +25,14 @@ public class EmployeeDetailDto {
     private long jobDepartmentSalaryRange;
     private DepartmentLevelStatus employeeLevelStatus;
 
-    public EmployeeDetailDto(Integer id, String firstName, String lastName, Gender gender, String birthDate, String email, String bankName, String bankNumber, String photo, String hiringDate, String buddyName, String departmentName, String username, String jobDepartment, long jobDepartmentSalaryRange, DepartmentLevelStatus employeeLevelStatus) {
+    public EmployeeDetailDto(Integer id, String firstName, String lastName, Gender gender, String birthDate, String email, Integer bankId, String bankName, String bankNumber, String photo, String hiringDate, String buddyName, String departmentName, String username, String jobDepartment, long jobDepartmentSalaryRange, DepartmentLevelStatus employeeLevelStatus) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
         this.birthDate = birthDate;
         this.email = email;
+        this.bankId = bankId;
         this.bankName = bankName;
         this.bankNumber = bankNumber;
         this.photo = photo;
@@ -41,6 +43,14 @@ public class EmployeeDetailDto {
         this.jobDepartment = jobDepartment;
         this.jobDepartmentSalaryRange = jobDepartmentSalaryRange;
         this.employeeLevelStatus = employeeLevelStatus;
+    }
+
+    public Integer getBankId() {
+        return bankId;
+    }
+
+    public void setBankId(Integer bankId) {
+        this.bankId = bankId;
     }
 
     public Integer getId() {

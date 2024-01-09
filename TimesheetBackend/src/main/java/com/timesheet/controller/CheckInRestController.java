@@ -52,7 +52,7 @@ public class CheckInRestController {
                                                                                            @RequestParam(value = "month", required = false) Integer month,
                                                                                            @RequestParam(value = "year", required = false) Integer year,
                                                                                            @RequestParam(value = "isComplain", required = false) Boolean isComplain,
-                                                                                           @RequestParam(value = "isManage") boolean isManage) {
+                                                                                           @RequestParam(value = "isManage", required = false) Boolean isManage) {
         Sort sort = Sort.by(sortField);
         sort = (sortDir.equals("asc")) ? sort.ascending() : sort.descending();
         Pageable pageable = PageRequest.of(pageNum - 1, pageSize, sort);
@@ -87,7 +87,7 @@ public class CheckInRestController {
     }
 
     //    @Scheduled(cron = "0 * ${spring.scheduled.hour.structure} * * ${spring.scheduled.day}")
-    @Scheduled(cron = "0 0 7 * * *")
+    @Scheduled(cron = "0 15 20 * * *")
     public void checkPunishmentCheckin() {
         LocalDate localDate = LocalDate.now();
         List<Integer> employeeIdsNotAbsenceInDay = checkInService.getAllEmployeeNotAbsenceInDay(localDate);
@@ -95,18 +95,11 @@ public class CheckInRestController {
     }
 
     //    @Scheduled(cron = "0 0 0 * * ${spring.scheduled.day}")
-    @Scheduled(cron = "0 15 7 * * *")
+    @Scheduled(cron = "0 20 15 * * *")
     public void initDateCheckin() {
         LocalDateTime localDateTime = LocalDateTime.now();
         List<Employee> employees = employeeRepository.findAll();
         employees.forEach(employee -> checkInService.saveInitDate(employee.getId(), localDateTime));
-    }
-
-    @Scheduled(cron = "0 5 15 * * *")
-    public void trainModelImageClassification() {
-        RestTemplate restTemplate = new RestTemplate();
-        String url = "http://127.0.0.1:5000/train_model";
-        restTemplate.getForObject(url, String.class);
     }
 
     @PutMapping("update_status")

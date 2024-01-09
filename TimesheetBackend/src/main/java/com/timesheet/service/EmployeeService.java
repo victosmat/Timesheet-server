@@ -28,7 +28,7 @@ public interface EmployeeService {
 
     EmployeeFormDto findEmployeeFormById(Integer id) throws EmployeeNotFoundException;
 
-    Boolean save(EmployeeSaveDto employeeSaveDto);
+    Boolean save(EmployeeSaveDto employeeSaveDto) throws EmployeeNotFoundException;
 
     void detete(Integer employeeId) throws EmployeeNotFoundException;
 

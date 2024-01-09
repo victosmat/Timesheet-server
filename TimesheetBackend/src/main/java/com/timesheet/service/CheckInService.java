@@ -33,7 +33,7 @@ public interface CheckInService {
 
     int checkCurrentDateIsExist(LocalDateTime localDateTime);
 
-    Page<CheckinPunishmentResDto> getCheckinOfEmployeeAndPunishmentByStatus(Integer employeeId, CheckInStatus status, int month, int year, Boolean isComplain, Pageable pageable, boolean isManage);
+    Page<CheckinPunishmentResDto> getCheckinOfEmployeeAndPunishmentByStatus(Integer employeeId, CheckInStatus status, int month, int year, Boolean isComplain, Pageable pageable, Boolean isManage);
 
     Page<ICheckInManageDto> getAllCheckinAndPunishment(String keyword, Integer month, Integer year, String department, Pageable pageable);
 }

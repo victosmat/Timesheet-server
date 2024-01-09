@@ -167,7 +167,7 @@ public class CheckInServiceImpl implements CheckInService {
     @Override
     public Page<CheckinPunishmentResDto> getCheckinOfEmployeeAndPunishmentByStatus(
             Integer employeeId, CheckInStatus status, int month, int year,
-            Boolean isComplain, Pageable pageable, boolean isManage) {
+            Boolean isComplain, Pageable pageable, Boolean isManage) {
 
         Page<CheckinPunishmentDto> checkinPunishmentDtoPage =
                 checkInRepository.getCheckinOfEmployeeAndPunishmentByStatus(employeeId, status, month, year, isManage, isComplain, pageable);

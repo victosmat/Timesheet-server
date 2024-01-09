@@ -16,7 +16,6 @@ import com.timesheet.repository.RoleRepository;
 import com.timesheet.service.EmployeeService;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -30,10 +29,8 @@ import java.util.Objects;
 import java.util.Set;
 
 @Service
-@Scope("prototype")
 @Transactional
 public class EmployeeServiceImpl implements EmployeeService {
-    static int a = 0;
     private final EmployeeRepository employeeRepository;
     private final EmployeeFormMapper employeeFormMapper;
     private final DepartmentRepository departmentRepository;
@@ -50,8 +47,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
         this.emailServiceImpl = emailServiceImpl;
-        a++;
-        System.out.println(a);
     }
 
     @Override
@@ -113,31 +108,59 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     @Transactional
-    public Boolean save(EmployeeSaveDto employeeSaveDto) {
-        Bank bank = new Bank(null, employeeSaveDto.getBankName(), employeeSaveDto.getBankNumber());
-        Employee buddy = null;
-        if (employeeSaveDto.getBuddyId() != 0)
-            buddy = employeeRepository.findById(employeeSaveDto.getBuddyId()).orElseThrow();
-        Department department = departmentRepository.findById(employeeSaveDto.getDepartmentId()).orElseThrow();
-        Role role = roleRepository.findById(employeeSaveDto.getJobDepartmentId()).orElseThrow();
-        JobDepartment jobDepartment = jobDepartmentRepository.findByJobDepartment(role.getName()).orElseThrow();
-        String password = employeeSaveDto.getPassword();
-        Account account = new Account(employeeSaveDto.getUsername(), passwordEncoder.encode(employeeSaveDto.getPassword()), List.of(role));
-        Employee employee = new Employee(employeeSaveDto.getFirstName(), employeeSaveDto.getLastName(), employeeSaveDto.getGender(), employeeSaveDto.getBirthDate(), employeeSaveDto.getHiringDate(), employeeSaveDto.getEmail(), true, buddy, department, account, jobDepartment, employeeSaveDto.getLevel(), bank);
-        if (employeeSaveDto.getId() != null) employee.setId(employeeSaveDto.getId());
+    public Boolean save(EmployeeSaveDto employeeSaveDto) throws EmployeeNotFoundException {
+        if (Objects.isNull(employeeSaveDto.getId())) {
+            Bank bank = new Bank(null, employeeSaveDto.getBankName(), employeeSaveDto.getBankNumber());
+            Employee buddy = null;
+            if (employeeSaveDto.getBuddyId() != 0)
+                buddy = employeeRepository.findById(employeeSaveDto.getBuddyId()).orElseThrow();
+            Department department = departmentRepository.findById(employeeSaveDto.getDepartmentId()).orElseThrow();
+            Role role = roleRepository.findById(employeeSaveDto.getJobDepartmentId()).orElseThrow();
+            JobDepartment jobDepartment = jobDepartmentRepository.findByJobDepartment(role.getName()).orElseThrow();
+            String password = employeeSaveDto.getPassword();
+            Account account = new Account(employeeSaveDto.getUsername(), passwordEncoder.encode(employeeSaveDto.getPassword()), List.of(role));
+            Employee employee = new Employee(employeeSaveDto.getFirstName(), employeeSaveDto.getLastName(), employeeSaveDto.getGender(), employeeSaveDto.getBirthDate(), employeeSaveDto.getHiringDate(), employeeSaveDto.getEmail(), true, buddy, department, account, jobDepartment, employeeSaveDto.getLevel(), bank);
+            if (employeeSaveDto.getId() != null) employee.setId(employeeSaveDto.getId());
 
-        try {
-            employee = employeeRepository.save(employee);
-            if (employeeSaveDto.getId() == null) {
-                emailServiceImpl.sendEmailToPM(employee, "NEW");
-                emailServiceImpl.sendEmailToEmployee(employee, "NEW", password);
-            } else {
-                emailServiceImpl.sendEmailToPM(employee, "UPDATE");
-                emailServiceImpl.sendEmailToEmployee(employee, "UPDATE", Strings.EMPTY);
+            try {
+                employee = employeeRepository.save(employee);
+                if (employeeSaveDto.getId() == null) {
+                    emailServiceImpl.sendEmailToPM(employee, "NEW");
+                    emailServiceImpl.sendEmailToEmployee(employee, "NEW", password);
+                } else {
+                    emailServiceImpl.sendEmailToPM(employee, "UPDATE");
+                    emailServiceImpl.sendEmailToEmployee(employee, "UPDATE", Strings.EMPTY);
+                }
+                return true;
+            } catch (Exception e) {
+                return false;
             }
-            return true;
-        } catch (Exception e) {
-            return false;
+        } else {
+            Employee employee = employeeRepository.findById(employeeSaveDto.getId()).orElseThrow(() -> new EmployeeNotFoundException("Employee not found with id: " + employeeSaveDto.getId()));
+            if (Objects.nonNull(employeeSaveDto.getFirstName())) employee.setFirstName(employeeSaveDto.getFirstName());
+            if (Objects.nonNull(employeeSaveDto.getLastName())) employee.setLastName(employeeSaveDto.getLastName());
+            if (Objects.nonNull(employeeSaveDto.getBirthDate())) employee.setBirthDate(employeeSaveDto.getBirthDate());
+            if (Objects.nonNull(employeeSaveDto.getEmail())) employee.setEmail(employeeSaveDto.getEmail());
+            Bank bank = employee.getBank();
+            if (Objects.nonNull(employeeSaveDto.getBankName())) bank.setName(employeeSaveDto.getBankName());
+            if (Objects.nonNull(employeeSaveDto.getBankNumber())) bank.setNumber(employeeSaveDto.getBankNumber());
+            employee.setBank(bank);
+            if (Objects.nonNull(employeeSaveDto.getGender())) employee.setGender(employeeSaveDto.getGender());
+            if (Objects.nonNull(employeeSaveDto.getBuddyId()))
+                employee.setBuddy(employeeRepository.findById(employeeSaveDto.getBuddyId()).orElseThrow(() -> new EmployeeNotFoundException("Buddy not found with id: " + employeeSaveDto.getBuddyId())));
+            if (Objects.nonNull(employeeSaveDto.getDepartmentId()))
+                employee.setDepartment(departmentRepository.findById(employeeSaveDto.getDepartmentId()).orElseThrow(() -> new EmployeeNotFoundException("Department not found with id: " + employeeSaveDto.getDepartmentId())));
+            if (Objects.nonNull(employeeSaveDto.getHiringDate()))
+                employee.setHiringDate(employeeSaveDto.getHiringDate());
+            if (Objects.nonNull(employeeSaveDto.getLevel()))
+                employee.setEmployeeLevelStatus(employeeSaveDto.getLevel());
+
+            try {
+                employeeRepository.save(employee);
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
         }
     }
 
