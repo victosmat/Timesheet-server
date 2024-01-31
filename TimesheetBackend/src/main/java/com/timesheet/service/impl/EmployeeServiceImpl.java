@@ -146,7 +146,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             if (Objects.nonNull(employeeSaveDto.getBankNumber())) bank.setNumber(employeeSaveDto.getBankNumber());
             employee.setBank(bank);
             if (Objects.nonNull(employeeSaveDto.getGender())) employee.setGender(employeeSaveDto.getGender());
-            if (Objects.nonNull(employeeSaveDto.getBuddyId()))
+            if (Objects.nonNull(employeeSaveDto.getBuddyId()) && employeeSaveDto.getBuddyId() != 0)
                 employee.setBuddy(employeeRepository.findById(employeeSaveDto.getBuddyId()).orElseThrow(() -> new EmployeeNotFoundException("Buddy not found with id: " + employeeSaveDto.getBuddyId())));
             if (Objects.nonNull(employeeSaveDto.getDepartmentId()))
                 employee.setDepartment(departmentRepository.findById(employeeSaveDto.getDepartmentId()).orElseThrow(() -> new EmployeeNotFoundException("Department not found with id: " + employeeSaveDto.getDepartmentId())));

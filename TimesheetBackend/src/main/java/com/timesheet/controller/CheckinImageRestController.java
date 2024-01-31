@@ -32,11 +32,11 @@ public class CheckinImageRestController {
                 .block();
     }
 
-    @Scheduled(cron = "0 5 15 * * *")
+    @Scheduled(cron = "0 6 11 * * *")
     public void trainModelImageClassification() {
         webClient.build()
                 .get()
-                .uri("/train_model_image_classification")
+                .uri("/train_model")
                 .retrieve()
                 .bodyToMono(Object.class)
                 .block();

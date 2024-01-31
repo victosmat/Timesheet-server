@@ -17,11 +17,13 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.authorization.AuthorizationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.CorsConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -115,10 +117,12 @@ public class SecurityConfig {
         LOGGER.info("JUMP TO FILTER CHAIN");
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
         httpSecurity.cors(customizer -> {
+
         });
 
         httpSecurity.sessionManagement(customizer -> customizer.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         httpSecurity.authorizeHttpRequests(customizer -> customizer.requestMatchers("/app/login", "/app/refresh_token").permitAll());
+        httpSecurity.authorizeHttpRequests(customizer -> customizer.requestMatchers("/**").permitAll());
         httpSecurity.authorizeHttpRequests(customizer -> customizer.requestMatchers("/api/v1/auth/**").permitAll());
         httpSecurity.authorizeHttpRequests(customizer -> customizer.requestMatchers("/v2/api-docs/**").authenticated());
         httpSecurity.authorizeHttpRequests(customizer -> customizer.requestMatchers("/v3/api-docs/**").permitAll());
